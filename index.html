@@ -12,8 +12,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
   <link href="https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;600;700;800;900&display=swap" rel="stylesheet" />
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+  <link rel="preload" href="assets/branding/haiderali-hero.png" as="image" />
+  <link rel="preload" href="assets/branding/favicon.png" as="image" />
   <style>
 
     * {
@@ -24,6 +24,8 @@
 
     html {
       scroll-behavior: smooth;
+      max-width: 100%;
+      overflow-x: clip;
     }
 
     body {
@@ -31,9 +33,24 @@
       font-family: 'Raleway', sans-serif;
       color: #101A31;
       line-height: 1.6;
-      overflow-x: hidden;
+      overflow-x: clip;
+      max-width: 100%;
+      width: 100%;
       -webkit-font-smoothing: antialiased;
       padding-top: 64px;
+      position: relative;
+    }
+
+    /* Hero: visible immediately; GSAP enhances when ready */
+    #hero.hero-booting .name-letter,
+    #hero.hero-booting #heroDesignation,
+    #hero.hero-booting #heroHook,
+    #hero.hero-booting #heroSubhead,
+    #hero.hero-booting #heroCTAs,
+    #hero.hero-booting #impactMetrics,
+    #hero.hero-booting .hero-right {
+      opacity: 1 !important;
+      transform: none !important;
     }
 
     section[id] {
@@ -78,6 +95,7 @@
       top: 0;
       left: 0;
       width: 100%;
+      max-width: 100%;
       z-index: 9999;
       display: flex;
       align-items: center;
@@ -201,81 +219,6 @@
     }
 
     /* ============================================================
-       FLOATING SOCIAL ICONS (Bottom Right) - Interactive like Contact
-       ============================================================ */
-    .social-float {
-      position: fixed;
-      bottom: 2rem;
-      right: 2rem;
-      z-index: 9998;
-      display: flex;
-      flex-direction: column;
-      gap: 0.8rem;
-    }
-
-    .social-float a {
-      width: 44px;
-      height: 44px;
-      border-radius: 50%;
-      background: #F4F6F9;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.3s ease;
-      text-decoration: none;
-      position: relative;
-    }
-
-    .social-float a:hover {
-      background: #FF8308;
-      transform: scale(1.05);
-    }
-
-    .social-float a svg {
-      width: 20px;
-      height: 20px;
-      fill: #101A31;
-      stroke: #101A31;
-      transition: all 0.3s ease;
-    }
-
-    .social-float a:hover svg {
-      fill: #FFFFFF;
-      stroke: #FFFFFF;
-    }
-
-    .social-float .email-float svg {
-      fill: none;
-      stroke: #101A31;
-      stroke-width: 2;
-    }
-
-    .social-float .email-float:hover svg {
-      stroke: #FFFFFF;
-      fill: none;
-    }
-
-    /* Sonar pulse - exactly like contact section */
-    .social-float a::before {
-      content: "";
-      position: absolute;
-      inset: -4px;
-      border-radius: 50%;
-      border: 1.5px solid #FF8308;
-      opacity: 0;
-      animation: sonarPulse 3s ease-out infinite;
-    }
-
-    @keyframes sonarPulse {
-      0% { transform: scale(0.9); opacity: 0.4; }
-      100% { transform: scale(1.35); opacity: 0; }
-    }
-
-    /* Different delays for each icon */
-    .social-float a:nth-child(1)::before { animation-delay: 0s; }
-    .social-float a:nth-child(2)::before { animation-delay: 0.5s; }
-
-    /* ============================================================
        FOOTER
        ============================================================ */
     #siteFooter {
@@ -284,12 +227,17 @@
       position: relative;
       overflow: hidden;
       margin-top: 80px;
+      width: 100%;
+      max-width: 100%;
+      box-sizing: border-box;
     }
 
     .footer-container {
       max-width: 1100px;
+      width: 100%;
       margin: 0 auto;
       padding: 0 2rem;
+      box-sizing: border-box;
     }
 
     .footer-grid {
@@ -913,16 +861,24 @@
       background: #FFFFFF;
     }
 
+    .portrait-wrapper {
+      padding: 14px;
+      box-sizing: border-box;
+    }
+
     .portrait-frame {
       position: absolute;
-      top: -10px;
-      left: -10px;
-      width: 100%;
-      height: 100%;
+      top: 4px;
+      left: 4px;
+      right: 4px;
+      bottom: 4px;
+      width: auto;
+      height: auto;
       border: 2.5px solid #FF8308;
       border-radius: 20px;
       z-index: 1;
       opacity: 0.5;
+      pointer-events: none;
     }
 
     .portrait-dot {
@@ -1085,15 +1041,6 @@
   margin-bottom: 2.5rem;
 }
 
-.about-portrait-wrapper {
-  float: right;
-  margin: 0 0 2rem 3rem;
-  max-width: 320px;
-  width: 100%;
-  shape-outside: border-box;
-  padding: 0.5rem;
-}
-
     /* Paragraph 1 */
     .about-text-p1 {
       font-family: 'Raleway', sans-serif;
@@ -1104,29 +1051,37 @@
       transform: translateY(20px);
     }
 
-    /* Roman's exact portrait styling - static (no floating) */
     .about-portrait-wrapper {
+      float: right;
       position: relative;
       width: 100%;
-      max-width: 380px;
-      margin: 0 auto;
+      max-width: 340px;
+      margin: 0 0 2.5rem 2.5rem;
+      padding: 16px;
+      box-sizing: border-box;
+      shape-outside: margin-box;
     }
-.about-portrait-wrapper .about-portrait {
-  border: 1px solid rgba(255, 131, 8, 0.1);
-  border-radius: 20px;
-  background: #FFFFFF;
-}
+
+    .about-portrait-wrapper .about-portrait {
+      border: 1px solid rgba(255, 131, 8, 0.1);
+      border-radius: 20px;
+      background: #FFFFFF;
+    }
+
     .about-portrait-frame {
       position: absolute;
-      top: -10px;
-      left: -10px;
-      width: 100%;
-      height: 100%;
+      top: 4px;
+      left: 4px;
+      right: 4px;
+      bottom: 4px;
+      width: auto;
+      height: auto;
       border: 2.5px solid #FF8308;
       border-radius: 20px;
       z-index: 1;
       opacity: 0.5;
       transition: opacity 0.3s ease;
+      pointer-events: none;
     }
     .about-portrait {
       width: 100%;
@@ -1224,11 +1179,19 @@
         padding: 0 1.5rem;
       }
       .about-row-split {
-        grid-template-columns: 1fr;
-        gap: 2rem;
+        display: flex;
+        flex-direction: column;
+        gap: 1.5rem;
+      }
+      .about-text-p1 {
+        order: 1;
       }
       .about-portrait-wrapper {
+        order: 2;
+        float: none;
         max-width: 280px;
+        margin: 0.5rem auto 0;
+        padding: 16px;
       }
       .about-bridge {
         max-width: 100%;
@@ -1766,41 +1729,124 @@
       align-items: flex-start;
     }
 
-    /* ========== SPINE COLUMN (year reel centered on line) ========== */
-    .exp-spine-col {
-      position: relative;
-      flex: 0 0 88px;
-      align-self: stretch;
-      min-height: 160px;
-    }
+/* ========== SPINE COLUMN ========== */
+.exp-spine-col {
+  position: relative;
+  flex: 0 0 130px;
+  align-self: stretch;
+  min-height: 160px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  padding-right: 10px; /* ← Reduce padding */
+}
 
-    .connector-line {
-      position: absolute;
-      left: 50%;
-      top: 0;
-      bottom: 0;
-      width: 2px;
-      background: #101A31;
-      opacity: 0.15;
-      transform: translateX(-50%);
-      transition: all 0.5s ease;
-      z-index: 0;
-    }
+/* ========== CONNECTOR LINE - RIGHT SIDE OF THE REEL ========== */
+.connector-line {
+  position: absolute;
+  right: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px; /* ← Make it slightly thicker so the dot is visible on it */
+  background: #FF8308; /* ← Make it orange so you can see it */
+  opacity: 0.3;
+  transition: all 0.5s ease;
+  z-index: 1;
+}
 
-    .year-static {
-      font-family: 'Raleway', sans-serif;
-      font-size: 2.2rem;
-      font-weight: 800;
-      color: #101A31;
-      opacity: 0.25;
-      line-height: 1;
-      position: absolute;
-      right: calc(50% + 30px);
-      top: 50%;
-      transform: translateY(-50%);
-      z-index: 2;
-      pointer-events: none;
-    }
+.connector-line.active-connection {
+  opacity: 0.6;
+  background: #FF8308;
+}
+
+/* ========== YEAR REEL ========== */
+.year-reel-wrapper {
+  position: sticky;
+  top: calc(64px + 2rem);
+  z-index: 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 160px;
+  width: 65px;
+}
+
+.year-static {
+  font-family: 'Raleway', sans-serif;
+  font-size: 2.2rem;
+  font-weight: 800;
+  color: #101A31;
+  opacity: 0.25;
+  line-height: 1;
+  z-index: 3;
+  pointer-events: none;
+  margin-right: 2px;
+}
+
+.year-reel-window {
+  width: 55px;
+  height: 160px;
+  overflow: hidden;
+  background: transparent;
+  border-radius: 12px;
+  position: relative;
+  z-index: 3;
+  mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+  -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 25%, black 75%, transparent 100%);
+}
+
+.year-reel-drum {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0;
+  transition: transform 0.6s cubic-bezier(0.25, 0.8, 0.25, 1.2);
+}
+
+.year-digit {
+  font-family: 'Raleway', sans-serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: #101A31;
+  opacity: 0.2;
+  text-align: center;
+  line-height: 1;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: all 0.35s ease;
+  width: 100%;
+  background: transparent;
+  border-radius: 8px;
+  user-select: none;
+  position: relative;
+  z-index: 3;
+}
+
+.year-digit.active {
+  color: #FFFFFF;
+  background: #FF8308;
+  font-size: 1.8rem;
+  font-weight: 800;
+  opacity: 1 !important;
+  text-shadow: 0 0 20px rgba(255, 131, 8, 0.5);
+  border-radius: 10px;
+  box-shadow: 0 0 30px rgba(255, 131, 8, 0.3);
+}
+
+.year-digit:hover {
+  opacity: 0.6;
+}
+
+.year-digit.active:hover {
+  opacity: 1 !important;
+}
+
+
+    .year-reel-nav { display: none; }
+    .year-nav-btn { display: none; }
 
     /* ========== VERTICAL ODOMETRY REEL ========== */
     .year-reel-wrapper {
@@ -1852,6 +1898,7 @@
       background: transparent;
       border-radius: 8px;
       user-select: none;
+      z-index: 5;
     }
 
     .year-digit.active {
@@ -1890,7 +1937,7 @@
       opacity: 0.3;
       top: 80px;
       transition: top 0.55s cubic-bezier(0.25, 0.8, 0.25, 1.2), background 0.5s ease, opacity 0.5s ease;
-      z-index: 3;
+      z-index: 1;
       pointer-events: none;
     }
 
@@ -2121,83 +2168,116 @@
       transform: translateY(-2px);
     }
 
-    /* ========== RESPONSIVE ========== */
     @media (max-width: 768px) {
-      #experience {
-        padding: 70px 0 80px;
-      }
-      .exp-subhead {
-        margin-bottom: 1.8rem;
-      }
-      .exp-layout {
-        flex-direction: column;
-        gap: 1.2rem;
-      }
-      .exp-spine-col {
-        width: 100%;
-        min-height: 120px;
-        display: flex;
-        justify-content: center;
-      }
-      .year-reel-wrapper {
-        position: relative;
-        top: auto;
-        height: 120px;
-      }
-      .year-reel-window {
-        height: 120px;
-        width: 44px;
-      }
-      .year-static {
-        font-size: 1.5rem;
-      }
-      .year-digit {
-        font-size: 1.1rem;
-        height: 32px;
-      }
-      .year-digit.active {
-        font-size: 1.3rem;
-      }
-      .connector-line {
-        display: block;
-      }
-      .ghost-card {
-        max-height: 80px;
-        padding: 0.8rem 1rem;
-        gap: 0.8rem;
-      }
-      .ghost-card.expanded {
-        max-height: 900px;
-        padding: 1.2rem;
-      }
-      .ghost-role {
-        font-size: 0.9rem;
-      }
-      .ghost-company {
-        font-size: 0.75rem;
-      }
-      .ghost-logo {
-        width: 36px;
-        height: 36px;
-      }
-      .ghost-logo img {
-        width: 26px;
-      }
-      .exp-ctas {
-        margin-top: 2rem;
-        flex-direction: column;
-        gap: 0.8rem;
-      }
-      .ghost-detail-item {
-        font-size: 0.8rem;
-        padding-left: 1rem;
-      }
-    }
+  #experience {
+    padding: 70px 0 80px;
+  }
+  .exp-subhead {
+    margin-bottom: 1.8rem;
+  }
+  .exp-layout {
+    flex-direction: column;
+    gap: 1.2rem;
+  }
+  .exp-spine-col {
+    width: 100%;
+    min-height: 120px;
+    display: flex;
+    justify-content: center;
+    padding-right: 0;
+  }
+  .year-reel-wrapper {
+    position: relative;
+    top: auto;
+    height: 120px;
+    width: auto;
+    gap: 0.35rem;
+  }
+  .year-reel-window {
+    height: 120px;
+    width: 48px;
+    /* Keep active year centered — only one clear slot */
+    mask-image: linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%);
+    -webkit-mask-image: linear-gradient(to bottom, transparent 0%, black 35%, black 65%, transparent 100%);
+  }
+  .year-static {
+    font-size: 1.5rem;
+  }
+  .year-digit {
+    font-size: 1.1rem;
+    height: 40px; /* must match JS digitHeight */
+  }
+  .year-digit.active {
+    font-size: 1.35rem;
+  }
+  .year-reel-nav {
+    display: flex;
+    flex-direction: column;
+    gap: 0.35rem;
+  }
+  .year-nav-btn {
+    display: flex;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    border: 1.5px solid #FF8308;
+    background: #FFFFFF;
+    color: #FF8308;
+    font-size: 0.75rem;
+    font-weight: 800;
+    cursor: pointer;
+    align-items: center;
+    justify-content: center;
+    line-height: 1;
+    padding: 0;
+  }
+  .year-nav-btn:active {
+    background: #FF8308;
+    color: #FFFFFF;
+  }
+  .connector-line {
+    display: none; /* ← Hide line on mobile */
+  }
+  .ghost-card {
+    max-height: 80px;
+    padding: 0.8rem 1rem;
+    gap: 0.8rem;
+  }
+  .ghost-card.expanded {
+    max-height: 900px;
+    padding: 1.2rem;
+  }
+  .ghost-role {
+    font-size: 0.9rem;
+  }
+  .ghost-company {
+    font-size: 0.75rem;
+  }
+  .ghost-logo {
+    width: 36px;
+    height: 36px;
+  }
+  .ghost-logo img {
+    width: 26px;
+  }
+  .exp-ctas {
+    margin-top: 2rem;
+    flex-direction: column;
+    gap: 0.8rem;
+  }
+  .ghost-detail-item {
+    font-size: 0.8rem;
+    padding-left: 1rem;
+  }
+}
 
 #projects {
-  background: #F4F6F9;
+  background: #FFFFFF;
   padding: 100px 0 80px;
   position: relative;
+  overflow-x: hidden;
+  max-width: 100%;
+  width: 100%;
 }
 
 .projects-container {
@@ -2357,18 +2437,23 @@
 }
 
 .orbit-1 {
-  width: 280px;
-  height: 280px;
+  width: 230px;
+  height: 230px;
 }
 
 .orbit-2 {
-  width: 400px;
-  height: 400px;
+  width: 370px;
+  height: 370px;
 }
 
 .orbit-3 {
-  width: 520px;
-  height: 520px;
+  width: 510px;
+  height: 510px;
+}
+
+.orbit-4 {
+  width: 650px;
+  height: 650px;
 }
 
 /* ===== PLANETS ===== */
@@ -2393,11 +2478,11 @@
 }
 
 .planet:hover {
-  transform: scale(1.25) !important;
+  /* Keep orbital transform; only pause via animation-play-state on planet-N:hover */
   border-color: #FF8308;
-  background: rgba(255, 131, 8, 0.15);
-  box-shadow: 0 0 30px rgba(255, 131, 8, 0.2);
-  z-index: 15;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 24px rgba(255, 131, 8, 0.18);
+  z-index: 20;
 }
 
 .planet .planet-name {
@@ -2443,7 +2528,7 @@
   background: #FF8308;
   color: #FFFFFF;
   box-shadow: 0 0 40px rgba(255, 131, 8, 0.3);
-  transform: scale(1.2) !important;
+  animation-play-state: paused;
 }
 
 .planet.active .planet-name {
@@ -2461,75 +2546,261 @@
 /* Inner orbit (faster) - 2 planets */
 /* ===== PLANET ORBITS - FIXED OVERLAP ===== */
 
-/* BFSI - MOVED to Orbit 2 (200px) with starting angle 45deg */
-.planet-1 {
-  animation: orbit1 18s linear infinite;
-}
+/* Each category gets its own orbit radius to prevent overlap */
+.planet-1 { animation: orbit1 22s linear infinite; }
 @keyframes orbit1 {
-  0% { transform: translate(-50%, -50%) rotate(45deg) translateX(200px) rotate(-45deg); }
-  100% { transform: translate(-50%, -50%) rotate(405deg) translateX(200px) rotate(-405deg); }
+  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(115px) rotate(0deg); }
+  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(115px) rotate(-360deg); }
 }
 .planet-1:hover { animation-play-state: paused; }
 
-/* E-Commerce - STAYS on Orbit 1 (130px) with starting angle 0deg */
-.planet-2 {
-  animation: orbit2 12s linear infinite;
-}
+.planet-2 { animation: orbit2 26s linear infinite; }
 @keyframes orbit2 {
-  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(130px) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(130px) rotate(-360deg); }
+  0% { transform: translate(-50%, -50%) rotate(36deg) translateX(150px) rotate(-36deg); }
+  100% { transform: translate(-50%, -50%) rotate(396deg) translateX(150px) rotate(-396deg); }
 }
 .planet-2:hover { animation-play-state: paused; }
 
-/* Education - Orbit 2 (200px) starting angle 180deg (opposite of BFSI) */
-.planet-3 {
-  animation: orbit3 20s linear infinite;
-}
+.planet-3 { animation: orbit3 30s linear infinite; }
 @keyframes orbit3 {
-  0% { transform: translate(-50%, -50%) rotate(180deg) translateX(200px) rotate(-180deg); }
-  100% { transform: translate(-50%, -50%) rotate(540deg) translateX(200px) rotate(-540deg); }
+  0% { transform: translate(-50%, -50%) rotate(72deg) translateX(185px) rotate(-72deg); }
+  100% { transform: translate(-50%, -50%) rotate(432deg) translateX(185px) rotate(-432deg); }
 }
 .planet-3:hover { animation-play-state: paused; }
 
-/* Health - Orbit 2 (200px) starting angle 90deg */
-.planet-4 {
-  animation: orbit4 22s linear infinite;
-}
+.planet-4 { animation: orbit4 34s linear infinite; }
 @keyframes orbit4 {
-  0% { transform: translate(-50%, -50%) rotate(270deg) translateX(200px) rotate(-270deg); }
-  100% { transform: translate(-50%, -50%) rotate(630deg) translateX(200px) rotate(-630deg); }
+  0% { transform: translate(-50%, -50%) rotate(108deg) translateX(220px) rotate(-108deg); }
+  100% { transform: translate(-50%, -50%) rotate(468deg) translateX(220px) rotate(-468deg); }
 }
 .planet-4:hover { animation-play-state: paused; }
 
-/* Real Estate - Orbit 3 (270px) starting angle 0deg */
-.planet-5 {
-  animation: orbit5 28s linear infinite;
-}
+.planet-5 { animation: orbit5 38s linear infinite; }
 @keyframes orbit5 {
-  0% { transform: translate(-50%, -50%) rotate(0deg) translateX(270px) rotate(0deg); }
-  100% { transform: translate(-50%, -50%) rotate(360deg) translateX(270px) rotate(-360deg); }
+  0% { transform: translate(-50%, -50%) rotate(144deg) translateX(255px) rotate(-144deg); }
+  100% { transform: translate(-50%, -50%) rotate(504deg) translateX(255px) rotate(-504deg); }
 }
 .planet-5:hover { animation-play-state: paused; }
 
-/* Business - Orbit 3 (270px) starting angle 120deg */
-.planet-6 {
-  animation: orbit6 32s linear infinite;
-}
+.planet-6 { animation: orbit6 42s linear infinite; }
 @keyframes orbit6 {
-  0% { transform: translate(-50%, -50%) rotate(120deg) translateX(270px) rotate(-120deg); }
-  100% { transform: translate(-50%, -50%) rotate(480deg) translateX(270px) rotate(-480deg); }
+  0% { transform: translate(-50%, -50%) rotate(180deg) translateX(290px) rotate(-180deg); }
+  100% { transform: translate(-50%, -50%) rotate(540deg) translateX(290px) rotate(-540deg); }
 }
 .planet-6:hover { animation-play-state: paused; }
 
-/* Research - Orbit 3 (270px) starting angle 240deg */
-.planet-7 {
-  animation: orbit7 36s linear infinite;
-}
+.planet-7 { animation: orbit7 46s linear infinite; }
 @keyframes orbit7 {
-  0% { transform: translate(-50%, -50%) rotate(240deg) translateX(270px) rotate(-240deg); }
-  100% { transform: translate(-50%, -50%) rotate(600deg) translateX(270px) rotate(-600deg); }
+  0% { transform: translate(-50%, -50%) rotate(216deg) translateX(325px) rotate(-216deg); }
+  100% { transform: translate(-50%, -50%) rotate(576deg) translateX(325px) rotate(-576deg); }
 }
 .planet-7:hover { animation-play-state: paused; }
+
+.planet-8 { animation: orbit8 50s linear infinite; }
+@keyframes orbit8 {
+  0% { transform: translate(-50%, -50%) rotate(252deg) translateX(155px) rotate(-252deg); }
+  100% { transform: translate(-50%, -50%) rotate(612deg) translateX(155px) rotate(-612deg); }
+}
+.planet-8:hover { animation-play-state: paused; }
+
+.planet-9 { animation: orbit9 54s linear infinite; }
+@keyframes orbit9 {
+  0% { transform: translate(-50%, -50%) rotate(288deg) translateX(240px) rotate(-288deg); }
+  100% { transform: translate(-50%, -50%) rotate(648deg) translateX(240px) rotate(-648deg); }
+}
+.planet-9:hover { animation-play-state: paused; }
+
+.planet-10 { animation: orbit10 58s linear infinite; }
+@keyframes orbit10 {
+  0% { transform: translate(-50%, -50%) rotate(324deg) translateX(310px) rotate(-324deg); }
+  100% { transform: translate(-50%, -50%) rotate(684deg) translateX(310px) rotate(-684deg); }
+}
+.planet-10:hover { animation-play-state: paused; }
+
+
+/* ===== PLANET HOVER TIP (no vibrate) ===== */
+.planet {
+  white-space: normal;
+  max-width: 160px;
+}
+.planet .planet-name {
+  white-space: normal;
+  text-align: center;
+  line-height: 1.25;
+}
+.planet .planet-full { display: none !important; }
+.planet:hover {
+  animation-play-state: paused;
+  border-color: #FF8308;
+  background: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 8px 24px rgba(255, 131, 8, 0.18);
+  z-index: 20;
+}
+.planet-hover-tip {
+  display: none;
+  position: absolute;
+  left: 50%;
+  bottom: calc(100% + 10px);
+  transform: translateX(-50%);
+  width: min(240px, 70vw);
+  padding: 0.65rem 0.75rem;
+  background: #101A31;
+  color: #FFFFFF;
+  font-size: 0.62rem;
+  font-weight: 500;
+  line-height: 1.45;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 131, 8, 0.45);
+  box-shadow: 0 10px 28px rgba(16, 26, 49, 0.25);
+  z-index: 30;
+  pointer-events: none;
+  white-space: normal;
+  text-align: left;
+}
+.planet-hover-tip::after {
+  content: "";
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  border: 6px solid transparent;
+  border-top-color: #101A31;
+}
+.planet:hover .planet-hover-tip {
+  display: block;
+}
+
+/* Professional Projects CTA glow */
+#professionalProjectsBtn,
+.btn-projects-glow {
+  position: relative;
+  background: #FF8308 !important;
+  color: #FFFFFF !important;
+  border-color: #FF8308 !important;
+  box-shadow: 0 0 0 0 rgba(255, 131, 8, 0.55);
+  animation: projectsBtnPulse 2s ease-out infinite;
+  overflow: visible;
+}
+#professionalProjectsBtn::before,
+.btn-projects-glow::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50px;
+  border: 2px solid rgba(255, 131, 8, 0.55);
+  animation: projectsBtnRing 2s ease-out infinite;
+  pointer-events: none;
+}
+@keyframes projectsBtnPulse {
+  0%, 100% { box-shadow: 0 0 18px rgba(255, 131, 8, 0.45); }
+  50% { box-shadow: 0 0 36px rgba(255, 131, 8, 0.75); }
+}
+@keyframes projectsBtnRing {
+  0% { transform: scale(0.95); opacity: 0.7; }
+  100% { transform: scale(1.2); opacity: 0; }
+}
+
+/* Mosaic category grid */
+.category-mosaic {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
+  gap: 0.75rem;
+  margin: 1rem 0 1.5rem;
+}
+.mosaic-tile {
+  min-height: 110px;
+  border-radius: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  padding: 1rem 0.75rem;
+  cursor: pointer;
+  font-family: 'Raleway', sans-serif;
+  font-size: 0.78rem;
+  font-weight: 700;
+  line-height: 1.35;
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  border: 1px solid transparent;
+}
+.mosaic-tile:hover {
+  transform: translateY(-3px);
+}
+.mosaic-tile.mosaic-orange {
+  background: #FF8308;
+  color: #FFFFFF;
+  box-shadow: 0 0 22px rgba(255, 131, 8, 0.45);
+  animation: mosaicGlow 2.4s ease-in-out infinite;
+}
+.mosaic-tile.mosaic-white {
+  background: #FFFFFF;
+  color: #FF8308;
+  border-color: rgba(255, 131, 8, 0.25);
+  text-shadow: 0 0 12px rgba(255, 131, 8, 0.55);
+  animation: mosaicTextGlow 2.4s ease-in-out infinite;
+}
+@keyframes mosaicGlow {
+  0%, 100% { box-shadow: 0 0 16px rgba(255, 131, 8, 0.35); }
+  50% { box-shadow: 0 0 32px rgba(255, 131, 8, 0.7); }
+}
+@keyframes mosaicTextGlow {
+  0%, 100% { text-shadow: 0 0 8px rgba(255, 131, 8, 0.35); }
+  50% { text-shadow: 0 0 18px rgba(255, 131, 8, 0.85); }
+}
+
+.projects-pagination {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.75rem;
+  margin-top: 1.25rem;
+  flex-wrap: wrap;
+}
+.page-arrow-btn {
+  width: 42px;
+  height: 42px;
+  border-radius: 50%;
+  border: 2px solid #FF8308;
+  background: #FFFFFF;
+  color: #FF8308;
+  font-size: 1.1rem;
+  font-weight: 800;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.25s ease;
+}
+.page-arrow-btn:hover:not(:disabled) {
+  background: #FF8308;
+  color: #FFFFFF;
+}
+.page-arrow-btn:disabled {
+  opacity: 0.35;
+  cursor: not-allowed;
+}
+.page-indicator {
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: #4B5563;
+  min-width: 90px;
+  text-align: center;
+}
+
+.solar-system-wrapper {
+  overflow: hidden;
+  max-width: min(750px, 100%);
+}
+
+@media (max-width: 768px) {
+  .category-mosaic {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .planet-hover-tip {
+    width: min(200px, 78vw);
+    font-size: 0.55rem;
+  }
+}
 
 /* ===== BACK BUTTON ===== */
 .back-to-categories {
@@ -2693,10 +2964,17 @@
 
 .logo-item img {
   max-height: 60px;
+  height: 48px;
   width: auto;
+  max-width: 120px;
   opacity: 0.6;
   transition: opacity 0.3s ease;
   filter: grayscale(0%);
+  display: block;
+  min-height: 40px;
+  min-width: 40px;
+  object-fit: contain;
+  background: transparent;
 }
 
 .logo-item img:hover {
@@ -2985,26 +3263,27 @@
     font-size: 0.45rem;
   }
 
-  .planet-1 { animation: orbit1 16s linear infinite; }
-  @keyframes orbit1 { 0% { transform: translate(-50%, -50%) rotate(0deg) translateX(100px) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateX(100px) rotate(-360deg); } }
-
-  .planet-2 { animation: orbit2 20s linear infinite; }
-  @keyframes orbit2 { 0% { transform: translate(-50%, -50%) rotate(72deg) translateX(100px) rotate(-72deg); } 100% { transform: translate(-50%, -50%) rotate(432deg) translateX(100px) rotate(-432deg); } }
-
-  .planet-3 { animation: orbit3 24s linear infinite; }
-  @keyframes orbit3 { 0% { transform: translate(-50%, -50%) rotate(144deg) translateX(145px) rotate(-144deg); } 100% { transform: translate(-50%, -50%) rotate(504deg) translateX(145px) rotate(-504deg); } }
-
-  .planet-4 { animation: orbit4 28s linear infinite; }
-  @keyframes orbit4 { 0% { transform: translate(-50%, -50%) rotate(216deg) translateX(145px) rotate(-216deg); } 100% { transform: translate(-50%, -50%) rotate(576deg) translateX(145px) rotate(-576deg); } }
-
-  .planet-5 { animation: orbit5 32s linear infinite; }
-  @keyframes orbit5 { 0% { transform: translate(-50%, -50%) rotate(288deg) translateX(190px) rotate(-288deg); } 100% { transform: translate(-50%, -50%) rotate(648deg) translateX(190px) rotate(-648deg); } }
-
-  .planet-6 { animation: orbit6 36s linear infinite; }
-  @keyframes orbit6 { 0% { transform: translate(-50%, -50%) rotate(36deg) translateX(190px) rotate(-36deg); } 100% { transform: translate(-50%, -50%) rotate(396deg) translateX(190px) rotate(-396deg); } }
-
-  .planet-7 { animation: orbit7 40s linear infinite; }
-  @keyframes orbit7 { 0% { transform: translate(-50%, -50%) rotate(108deg) translateX(190px) rotate(-108deg); } 100% { transform: translate(-50%, -50%) rotate(468deg) translateX(190px) rotate(-468deg); } }
+  .planet .planet-name { font-size: 0.48rem; max-width: 88px; }
+  .planet-1 { animation: orbit1m 22s linear infinite; }
+  @keyframes orbit1m { 0% { transform: translate(-50%, -50%) rotate(0deg) translateX(70px) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateX(70px) rotate(-360deg); } }
+  .planet-2 { animation: orbit2m 26s linear infinite; }
+  @keyframes orbit2m { 0% { transform: translate(-50%, -50%) rotate(36deg) translateX(90px) rotate(-36deg); } 100% { transform: translate(-50%, -50%) rotate(396deg) translateX(90px) rotate(-396deg); } }
+  .planet-3 { animation: orbit3m 30s linear infinite; }
+  @keyframes orbit3m { 0% { transform: translate(-50%, -50%) rotate(72deg) translateX(110px) rotate(-72deg); } 100% { transform: translate(-50%, -50%) rotate(432deg) translateX(110px) rotate(-432deg); } }
+  .planet-4 { animation: orbit4m 34s linear infinite; }
+  @keyframes orbit4m { 0% { transform: translate(-50%, -50%) rotate(108deg) translateX(130px) rotate(-108deg); } 100% { transform: translate(-50%, -50%) rotate(468deg) translateX(130px) rotate(-468deg); } }
+  .planet-5 { animation: orbit5m 38s linear infinite; }
+  @keyframes orbit5m { 0% { transform: translate(-50%, -50%) rotate(144deg) translateX(150px) rotate(-144deg); } 100% { transform: translate(-50%, -50%) rotate(504deg) translateX(150px) rotate(-504deg); } }
+  .planet-6 { animation: orbit6m 42s linear infinite; }
+  @keyframes orbit6m { 0% { transform: translate(-50%, -50%) rotate(180deg) translateX(170px) rotate(-180deg); } 100% { transform: translate(-50%, -50%) rotate(540deg) translateX(170px) rotate(-540deg); } }
+  .planet-7 { animation: orbit7m 46s linear infinite; }
+  @keyframes orbit7m { 0% { transform: translate(-50%, -50%) rotate(216deg) translateX(190px) rotate(-216deg); } 100% { transform: translate(-50%, -50%) rotate(576deg) translateX(190px) rotate(-576deg); } }
+  .planet-8 { animation: orbit8m 50s linear infinite; }
+  @keyframes orbit8m { 0% { transform: translate(-50%, -50%) rotate(252deg) translateX(95px) rotate(-252deg); } 100% { transform: translate(-50%, -50%) rotate(612deg) translateX(95px) rotate(-612deg); } }
+  .planet-9 { animation: orbit9m 54s linear infinite; }
+  @keyframes orbit9m { 0% { transform: translate(-50%, -50%) rotate(288deg) translateX(140px) rotate(-288deg); } 100% { transform: translate(-50%, -50%) rotate(648deg) translateX(140px) rotate(-648deg); } }
+  .planet-10 { animation: orbit10m 58s linear infinite; }
+  @keyframes orbit10m { 0% { transform: translate(-50%, -50%) rotate(324deg) translateX(180px) rotate(-324deg); } 100% { transform: translate(-50%, -50%) rotate(684deg) translateX(180px) rotate(-684deg); } }
 
   .projects-container {
     padding: 0 1rem;
@@ -3048,26 +3327,27 @@
   .planet { padding: 0.15rem 0.35rem; min-width: 30px; }
   .planet .planet-name { font-size: 0.45rem; }
 
-  .planet-1 { animation: orbit1 16s linear infinite; }
-  @keyframes orbit1 { 0% { transform: translate(-50%, -50%) rotate(0deg) translateX(75px) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateX(75px) rotate(-360deg); } }
-
-  .planet-2 { animation: orbit2 20s linear infinite; }
-  @keyframes orbit2 { 0% { transform: translate(-50%, -50%) rotate(72deg) translateX(75px) rotate(-72deg); } 100% { transform: translate(-50%, -50%) rotate(432deg) translateX(75px) rotate(-432deg); } }
-
-  .planet-3 { animation: orbit3 24s linear infinite; }
-  @keyframes orbit3 { 0% { transform: translate(-50%, -50%) rotate(144deg) translateX(110px) rotate(-144deg); } 100% { transform: translate(-50%, -50%) rotate(504deg) translateX(110px) rotate(-504deg); } }
-
-  .planet-4 { animation: orbit4 28s linear infinite; }
-  @keyframes orbit4 { 0% { transform: translate(-50%, -50%) rotate(216deg) translateX(110px) rotate(-216deg); } 100% { transform: translate(-50%, -50%) rotate(576deg) translateX(110px) rotate(-576deg); } }
-
-  .planet-5 { animation: orbit5 32s linear infinite; }
-  @keyframes orbit5 { 0% { transform: translate(-50%, -50%) rotate(288deg) translateX(145px) rotate(-288deg); } 100% { transform: translate(-50%, -50%) rotate(648deg) translateX(145px) rotate(-648deg); } }
-
-  .planet-6 { animation: orbit6 36s linear infinite; }
-  @keyframes orbit6 { 0% { transform: translate(-50%, -50%) rotate(36deg) translateX(145px) rotate(-36deg); } 100% { transform: translate(-50%, -50%) rotate(396deg) translateX(145px) rotate(-396deg); } }
-
-  .planet-7 { animation: orbit7 40s linear infinite; }
-  @keyframes orbit7 { 0% { transform: translate(-50%, -50%) rotate(108deg) translateX(145px) rotate(-108deg); } 100% { transform: translate(-50%, -50%) rotate(468deg) translateX(145px) rotate(-468deg); } }
+  .planet .planet-name { font-size: 0.4rem; max-width: 72px; }
+  .planet-1 { animation: orbit1s 22s linear infinite; }
+  @keyframes orbit1s { 0% { transform: translate(-50%, -50%) rotate(0deg) translateX(55px) rotate(0deg); } 100% { transform: translate(-50%, -50%) rotate(360deg) translateX(55px) rotate(-360deg); } }
+  .planet-2 { animation: orbit2s 26s linear infinite; }
+  @keyframes orbit2s { 0% { transform: translate(-50%, -50%) rotate(36deg) translateX(70px) rotate(-36deg); } 100% { transform: translate(-50%, -50%) rotate(396deg) translateX(70px) rotate(-396deg); } }
+  .planet-3 { animation: orbit3s 30s linear infinite; }
+  @keyframes orbit3s { 0% { transform: translate(-50%, -50%) rotate(72deg) translateX(85px) rotate(-72deg); } 100% { transform: translate(-50%, -50%) rotate(432deg) translateX(85px) rotate(-432deg); } }
+  .planet-4 { animation: orbit4s 34s linear infinite; }
+  @keyframes orbit4s { 0% { transform: translate(-50%, -50%) rotate(108deg) translateX(100px) rotate(-108deg); } 100% { transform: translate(-50%, -50%) rotate(468deg) translateX(100px) rotate(-468deg); } }
+  .planet-5 { animation: orbit5s 38s linear infinite; }
+  @keyframes orbit5s { 0% { transform: translate(-50%, -50%) rotate(144deg) translateX(115px) rotate(-144deg); } 100% { transform: translate(-50%, -50%) rotate(504deg) translateX(115px) rotate(-504deg); } }
+  .planet-6 { animation: orbit6s 42s linear infinite; }
+  @keyframes orbit6s { 0% { transform: translate(-50%, -50%) rotate(180deg) translateX(130px) rotate(-180deg); } 100% { transform: translate(-50%, -50%) rotate(540deg) translateX(130px) rotate(-540deg); } }
+  .planet-7 { animation: orbit7s 46s linear infinite; }
+  @keyframes orbit7s { 0% { transform: translate(-50%, -50%) rotate(216deg) translateX(145px) rotate(-216deg); } 100% { transform: translate(-50%, -50%) rotate(576deg) translateX(145px) rotate(-576deg); } }
+  .planet-8 { animation: orbit8s 50s linear infinite; }
+  @keyframes orbit8s { 0% { transform: translate(-50%, -50%) rotate(252deg) translateX(75px) rotate(-252deg); } 100% { transform: translate(-50%, -50%) rotate(612deg) translateX(75px) rotate(-612deg); } }
+  .planet-9 { animation: orbit9s 54s linear infinite; }
+  @keyframes orbit9s { 0% { transform: translate(-50%, -50%) rotate(288deg) translateX(110px) rotate(-288deg); } 100% { transform: translate(-50%, -50%) rotate(648deg) translateX(110px) rotate(-648deg); } }
+  .planet-10 { animation: orbit10s 58s linear infinite; }
+  @keyframes orbit10s { 0% { transform: translate(-50%, -50%) rotate(324deg) translateX(135px) rotate(-324deg); } 100% { transform: translate(-50%, -50%) rotate(684deg) translateX(135px) rotate(-684deg); } }
 }        
 /* ===== MOBILE RESPONSIVENESS FOR CATEGORY TIMELINE ===== */
 @media (max-width: 900px) {
@@ -4904,13 +5184,127 @@
         height: 40px;
       }
     }
+
+/* ============================================================
+   FLOATING SOCIAL ICONS - BRAND COLOR PULSE
+   ============================================================ */
+
+/* Pulse animations for each brand color */
+@keyframes floatPulseGreen {
+  0%, 100% { box-shadow: 0 6px 25px rgba(37, 211, 102, 0.4); }
+  50% { box-shadow: 0 10px 45px rgba(37, 211, 102, 0.8); }
+}
+
+@keyframes floatPulseBlue {
+  0%, 100% { box-shadow: 0 6px 25px rgba(10, 102, 194, 0.4); }
+  50% { box-shadow: 0 10px 45px rgba(10, 102, 194, 0.8); }
+}
+
+@keyframes floatPulseOrange {
+  0%, 100% { box-shadow: 0 6px 25px rgba(255, 131, 8, 0.4); }
+  50% { box-shadow: 0 10px 45px rgba(255, 131, 8, 0.8); }
+}
+
+/* Apply animations */
+#whatsappFloat {
+  animation: floatPulseGreen 2.5s ease-in-out infinite;
+}
+#linkedinFloat {
+  animation: floatPulseBlue 2.5s ease-in-out infinite;
+}
+#emailFloat {
+  animation: floatPulseOrange 2.5s ease-in-out infinite;
+}
+
+/* Hover effect - scale up */
+#whatsappFloat:hover,
+#linkedinFloat:hover,
+#emailFloat:hover {
+  transform: scale(1.1) !important;
+}
+
+/* ============================================================
+   MOBILE RESPONSIVE FLOATING BUTTONS
+   ============================================================ */
+@media (max-width: 768px) {
+  #whatsappFloat, #linkedinFloat, #emailFloat {
+    right: 1rem !important;
+    width: 44px !important;
+    height: 44px !important;
+  }
+  #whatsappFloat {
+    bottom: 4.5rem !important;
+  }
+  #linkedinFloat {
+    bottom: 8rem !important;
+  }
+  #emailFloat {
+    bottom: 11.5rem !important;
+  }
+}
+/* ===== RADIATING WAVE PULSE ON FLOATING ICONS ===== */
+
+/* The ring that radiates outward */
+#whatsappFloat::before,
+#linkedinFloat::before,
+#emailFloat::before {
+  content: "";
+  position: absolute;
+  inset: -6px;
+  border-radius: 50%;
+  border: 2.5px solid transparent;
+  z-index: -1;
+  pointer-events: none;
+  animation: ripplePulse 2s ease-out infinite;
+}
+
+/* WhatsApp - Green ring */
+#whatsappFloat::before {
+  border-color: #25D366;
+}
+
+/* LinkedIn - Blue ring */
+#linkedinFloat::before {
+  border-color: #0A66C2;
+}
+
+/* Email - Orange ring */
+#emailFloat::before {
+  border-color: #FF8308;
+}
+
+/* Different delays for each icon */
+#whatsappFloat::before {
+  animation-delay: 0s;
+}
+#linkedinFloat::before {
+  animation-delay: 0.5s;
+}
+#emailFloat::before {
+  animation-delay: 1s;
+}
+
+/* The ripple keyframes - ring expands and fades */
+@keyframes ripplePulse {
+  0% {
+    transform: scale(1);
+    opacity: 0.8;
+    border-width: 1px;
+  }
+  100% {
+    transform: scale(1.3);
+    opacity: 0;
+    border-width: 0.5px;
+  }
+}
+
   </style>
 </head>
 <body>
 
 <nav id="globalNav">
     <a href="#hero" class="nav-logo">
-      <img src="assets/branding/favicon.png" alt="Haider Ali" />
+      <img src="assets/branding/favicon.png" alt="Haider Ali Logo" width="34" height="34" decoding="async" fetchpriority="high" data-src="assets/branding/favicon.png" onerror="if(window.__logoRetry)window.__logoRetry(this,'HA')">
       <span class="nav-logo-text">Haider Ali</span>
     </a>
     <ul class="nav-links">
@@ -4935,27 +5329,25 @@
   </nav>
 
 <div class="social-float">
-    <!-- WhatsApp -->
-    <a href="https://wa.me/923110177836" target="_blank" rel="noopener" class="whatsapp-float" aria-label="WhatsApp">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/>
-      </svg>
-    </a>
-    <!-- LinkedIn -->
-    <a href="https://www.linkedin.com/in/haiderr-ali/" target="_blank" rel="noopener" class="linkedin-float" aria-label="LinkedIn">
-      <svg viewBox="0 0 24 24" fill="currentColor">
-        <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
-      </svg>
-    </a>
-    <!-- Email -->
-    <a href="mailto:haydraly1@gmail.com" class="email-float" aria-label="Email">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-        <rect x="2" y="4" width="20" height="16" rx="2"/>
-        <path d="M22 4L12 13 2 4"/>
-      </svg>
-    </a>
-  </div>
-<section id="hero">
+
+<!-- WhatsApp Floating Button -->
+<a href="https://wa.me/923110177836" target="_blank" rel="noopener" id="whatsappFloat" style="position:fixed;bottom:5rem;right:1.8rem;z-index:998;width:55px;height:55px;border-radius:50%;background:#25D366;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 25px rgba(37,211,102,0.4);text-decoration:none;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 448 512" fill="white"><path d="M380.9 97.1C339 55.1 283.2 32 223.9 32c-122.4 0-222 99.6-222 222 0 39.1 10.2 77.3 29.6 111L0 480l117.7-30.9c32.4 17.7 68.9 27 106.1 27h.1c122.3 0 224.1-99.6 224.1-222 0-59.3-25.2-115-67.1-157zm-157 341.6c-33.2 0-65.7-8.9-94-25.7l-6.7-4-69.8 18.3L72 359.2l-4.4-7c-18.5-29.4-28.2-63.3-28.2-98.2 0-101.7 82.8-184.5 184.6-184.5 49.3 0 95.6 19.2 130.4 54.1 34.8 34.9 56.2 81.2 56.1 130.5 0 101.8-84.9 184.6-186.6 184.6zm101.2-138.2c-5.5-2.8-32.8-16.2-37.9-18-5.1-1.9-8.8-2.8-12.5 2.8-3.7 5.6-14.3 18-17.6 21.8-3.2 3.7-6.5 4.2-12 1.4-5.5-2.8-23.2-8.5-44.2-27.1-16.4-14.6-27.4-32.7-30.6-38.2-3.2-5.6-.3-8.6 2.5-11.3 2.5-2.5 5.5-6.5 8.3-9.7 2.8-3.3 3.7-5.6 5.5-9.3 1.8-3.7.9-6.9-.5-9.7-1.4-2.8-12.5-30.1-17.1-41.2-4.5-10.8-9.1-9.3-12.5-9.5-3.2-.2-6.9-.2-10.6-.2-3.7 0-9.7 1.4-14.8 6.9-5.1 5.6-19.4 19-19.4 46.3 0 27.3 19.9 53.7 22.6 57.4 2.8 3.7 39.1 59.7 94.8 83.8 13.2 5.8 23.5 9.2 31.5 11.8 13.3 4.2 25.4 3.6 35 2.2 10.7-1.6 32.8-13.4 37.4-26.4 4.6-13 4.6-24.1 3.2-26.4-1.3-2.5-5-3.9-10.5-6.6z"/></svg>
+</a>
+
+<!-- LinkedIn Floating Button -->
+<a href="https://www.linkedin.com/in/haiderr-ali/" target="_blank" rel="noopener" id="linkedinFloat" style="position:fixed;bottom:9rem;right:1.8rem;z-index:998;width:55px;height:55px;border-radius:50%;background:#0A66C2;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 25px rgba(10,102,194,0.4);text-decoration:none;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+</a>
+
+<!-- Email Floating Button -->
+<a href="mailto:haydraly1@gmail.com" target="_blank" rel="noopener" id="emailFloat" style="position:fixed;bottom:13rem;right:1.8rem;z-index:998;width:55px;height:55px;border-radius:50%;background:#FF8308;display:flex;align-items:center;justify-content:center;box-shadow:0 6px 25px rgba(255,131,8,0.4);text-decoration:none;">
+  <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="white"><path d="M1.5 8.67v8.58a3 3 0 003 3h15a3 3 0 003-3V8.67l-8.928 5.493a3 3 0 01-3.144 0L1.5 8.67z"/><path d="M22.5 6.908V6.75a3 3 0 00-3-3h-15a3 3 0 00-3 3v.158l9.714 5.978a1.5 1.5 0 001.572 0L22.5 6.908z"/></svg>
+</a>
+
+</div>
+
+<section id="hero" class="hero-booting">
   <div class="hero-container">
     <div class="hero-grid">
       
@@ -4976,21 +5368,21 @@
         </div>
         
         <p id="heroDesignation">Sr. Social Media Lead & Performance Marketer</p>
-        <p id="heroHook">I help businesses make <span class="orange-highlight">more money</span> through performance and social media marketing</p>
-        <p id="heroSubhead">Most marketers guess; I decode algorithms and consumer psychology to predict. By combining thumb-stopping creative with data-backed tracking, I unleash your brand's full potential and dominate modern feeds using aggressive paid media scaling.</p>
+        <p id="heroHook">I help businesses make <span class="orange-highlight">more money</span> through performance & social media marketing.</p>
+        <p id="heroSubhead">Most marketers guess; I decode algorithms & consumer psychology to predict. By combining thumb-stopping creative with data-backed tracking, I unleash brand's full potential & dominate modern feeds using aggressive paid media scaling.</p>
         
         <div id="heroCTAs">
-          <a href="assets/docs/Haider-Ali-Resume.pdf" target="_blank" class="hero-cta-primary" id="heroResumeBtn"><span>Download resume</span></a>
+          <a href="assets/docs/Haider-Ali-Resume.pdf" download="Haider-Ali-Resume.pdf" class="hero-cta-primary" id="heroResumeBtn"><span>Download resume</span></a>
           <a href="#contact" class="hero-cta-secondary" id="growthBtn">Initiate growth brief</a>
         </div>
         
         <div id="impactMetrics">
           <div class="metric-card">
-            <div class="metric-number" data-target="4" data-suffix="+">0</div>
+            <div class="metric-number" data-target="4.5" data-suffix="+">0</div>
             <div class="metric-label">Years of Experience</div>
           </div>
           <div class="metric-card">
-            <div class="metric-number" data-target="75" data-prefix="$" data-suffix="k+">0</div>
+            <div class="metric-number" data-target="75" data-prefix="$" data-suffix="K+">0</div>
             <div class="metric-label">Monthly Spend</div>
           </div>
           <div class="metric-card">
@@ -4998,7 +5390,7 @@
             <div class="metric-label">Happy Customers</div>
           </div>
           <div class="metric-card">
-            <div class="metric-number" data-target="7" data-suffix="+">0</div>
+            <div class="metric-number" data-target="10" data-suffix="+">0</div>
             <div class="metric-label">Industries Served</div>
           </div>
         </div>
@@ -5009,7 +5401,7 @@
         <div class="image-wrapper">
           <div class="portrait-wrapper" id="heroPortraitWrapper">
             <div class="portrait-frame"></div>
-            <img src="assets/branding/haiderali-hero.png" alt="Haider Ali - performance marketer" class="profile-img" data-fallbacks="assets/branding/haiderali-about.png,assets/branding/haiderali-hero.png,assets/images/haiderali.svg">
+            <img src="assets/branding/haiderali-hero.png" alt="Haider Ali" class="profile-img" data-fallbacks="assets/branding/haiderali-about.png,assets/branding/haiderali-hero.png,assets/images/haiderali.svg">
             <div class="portrait-dot"></div>
           </div>
           <div class="orange-feet-shadow"></div>
@@ -5027,7 +5419,7 @@
     
     <!-- Roman's exact about-title (hook with orange "Profitable") -->
     <h2 class="about-title" id="aboutTitle">
-      Turning Digital Noise Into <span class="orange-accent">Profitable</span> Pipelines
+      Turning Digital Noise Into <span class="orange-accent">Profitable</span> Pipelines.
     </h2>
     
     <!-- Roman's exact about-bridge (styled subheading, NOT plain text) -->
@@ -5039,31 +5431,31 @@
 <div class="about-row-split">
   <div class="about-portrait-wrapper" id="aboutPortraitWrapper">
     <div class="about-portrait-frame"></div>
-    <img src="assets/branding/haiderali-about.png" alt="Haider Ali - Performance Marketing Strategist" class="about-portrait" onerror="this.src='https://placehold.co/500x600/F4F6F9/FF8308?text=Haider+Ali'">
+    <img src="assets/branding/haiderali-about.png" alt="haider ali" class="about-portrait" onerror="this.src='https://placehold.co/500x600/F4F6F9/FF8308?text=Haider+Ali'">
     <div class="about-portrait-dot"></div>
   </div>
   <div class="about-text-p1" id="aboutP1">
-    I still remember walking away from standard clinical psychology internships because I realized my true obsession was not just studying human emotion in a quiet room. I wanted to apply that knowledge where it matters most, which is understanding exactly what makes someone stop scrolling, click, and make a buying decision in a split second. The two worlds are actually deeply connected because the same psychological principles used to analyze behavior are the hidden keys to mastering modern advertising algorithms. Moving from analyzing minds to scaling budgets allowed me to look at data patterns through a human lens, turning raw psychological insights into a massive revenue advantage for international brands.
+    I still remember walking away from psychology internships because I realized my true obsession was not just studying human emotion but to apply that where it matters most, which is understanding exactly what makes someone stop scrolling, click & make a buying decision in a split second. The two worlds are actually deeply connected because the same psychological principles used to analyze behavior are the hidden keys to mastering modern advertising algorithms.
   </div>
 </div>
     
     <!-- Paragraph 2 - full width with consistent spacing -->
     <div class="about-fullwidth">
       <div class="about-text-p2" id="aboutP2">
-        My mission is to build highly profitable acquisition systems that completely eliminate guessing games and back every single ad dollar with tracking precision. Whether I am orchestrating organic cross platform narratives as a Social Media Lead or engineering high intent performance marketing funnels, I focus entirely on metrics that scale business profit. By combining thumb stopping creative strategy with bulletproof technical tracking, I help brands stop wasting media spend and start dominating modern feeds using highly targeted paid media scaling.
+        My mission is to build profitable acquisition systems that completely eliminate guesswork and back every single ad dollar with tracking precision. Whether I am orchestrating organic cross platform narratives as a Social Media Lead or engineering high intent performance marketing funnels, I focus entirely on metrics that scale business profit. By combining thumb-stopping creative strategy with bulletproof technical tracking, I help brands stop wasting media spend and start dominating modern feeds using highly targeted paid media scaling.
       </div>
     </div>
     
     <!-- Paragraph 3 - full width with consistent spacing -->
     <div class="about-fullwidth">
       <div class="about-text-p3" id="aboutP3">
-        Over the past 4+ years, this playbook has allowed me to manage thousands in ad spend across highly volatile niches. My track record includes optimizing a CAD $45,000 monthly Google Ads infrastructure for the North American mortgage market alongside USD $25,000 monthly Meta Ads campaigns. I have scaled DTC ecommerce brands to a 3x ROAS via Pinterest Ads with a €47,000 monthly allocation, and architected premium real estate lead generation engines in the UAE. Furthermore, I have engineered social media strategies and highly profitable dine-in advertising campaigns for various luxury food and beverage brands in Dubai. My execution relies on deploying full funnel content pipelines, advanced GTM and GA4 attribution architectures, and high converting PPC campaigns that turn vanity metrics into stable revenue.
+        Over the past 4.5+ years, I have managed hundreds of thousands of dollars in ad spend across highly volatile niches. My portfolio includes optimizing a CAD $45,000/month Google Ads infrastructure alongside a USD $25,000/month Meta Ads campaign for the North American mortgage market, scaling DTC e-commerce brands to a 5x ROAS via Pinterest Ads with a €47,000 monthly spend, and architecting high-converting real estate lead generation engines in the UAE. Additionally, I have engineered social media strategies and dine-in campaigns for prominent Dubai F&B brands. My approach centers on deploying full-funnel content pipelines, advanced GTM and GA4 tracking attribution, and high-ROI PPC campaigns that transform vanity metrics into dependable revenue.
       </div>
     </div>
     
     <!-- Roman's exact hybrid buttons -->
     <div class="about-buttons" id="aboutButtons">
-      <a href="#projects" class="btn-primary-about">View Funnels</a>
+      <a href="#projects" class="btn-primary-about">View Successful Projects</a>
       <a href="#contact" class="btn-ghost-about">Secure Strategy</a>
     </div>
     
@@ -5078,7 +5470,7 @@
   <div class="services-intro">
     <div class="services-label" id="servicesLabel">services & skills</div>
     <h2 class="services-title" id="servicesTitle">
-      Transforming Brands Into <span class="orange-accent">Digital Powerhouses</span>
+      Transforming Brands Into <span class="orange-accent">Digital Powerhouses.</span>
     </h2>
     <div class="services-bridge" id="servicesBridge">
       From crafting your brand's identity to driving measurable growth via the fastest way to match Business Goals with Right Audience.
@@ -5089,38 +5481,57 @@
     <div class="spine-line" id="spineLine"></div>
     <div class="spine-dot" id="spineDot"></div>
 
+<!-- SERVICE 1: Performance Marketing -->
+
     <div id="serviceData" style="display: none;">
-      <div class="service-data-item" data-id="0" data-number="01" data-name="Performance Marketing" data-subhead="I scale your brand with data-driven performance marketing services." data-desc="From high-converting ad campaigns to full-funnel strategies designed to attract, engage, and convert your ideal audience." 
-        data-metrics='[{"num":"$2M+","label":"Ad Spend Managed","target":2,"prefix":"$","suffix":"M+"},{"num":"250+","label":"Campaigns Launched","target":250,"suffix":"+"},{"num":"5x+","label":"Average ROAS","target":5,"suffix":"x+"},{"num":"4+","label":"Years in Marketing","target":4,"suffix":"+"}]'
-        data-pillars='[{"title":"ROI-Focused Strategy","text":"Every campaign I build is engineered with one clear goal: absolute profitability."},{"title":"Data-Driven Decision Making","text":"I analyze performance metrics to continuously optimize results and eliminate wasted spend."},{"title":"High-Converting Creatives","text":"I create compelling assets designed to capture attention and trigger buying actions."},{"title":"Multi-Platform Expertise","text":"I deploy campaigns across Google, Meta, TikTok, Pinterest, and Bing."},{"title":"Continuous Optimization","text":"Paid media is never static. I constantly run tests and scale winning audiences."},{"title":"Scalable Growth Systems","text":"I build conversion frameworks that scale budgets efficiently."},{"title":"End to End Campaign Management","text":"From positioning to reporting, I handle every moving part."},{"title":"Conversion Rate Optimization","text":"I optimize landing pages to turn clicks into customers."}]'
-        data-skills='["Meta Ads","Google Ads","Pinterest Ads","TikTok Ads","Bing Ads","Pay Per Click (PPC)","Search Engine Marketing (SEM)","Ad Serving","A/B Testing","Facebook Ads Manager"]'></div>
-      <div class="service-data-item" data-id="1" data-number="02" data-name="Social Media Marketing" data-subhead="I scale your brand with high-performance social media marketing services." data-desc="From scroll-stopping content to conversion-driven campaigns designed to attract, engage, and convert your ideal audience."
-        data-metrics='[{"num":"250+","label":"Campaigns Managed","target":250,"suffix":"+"},{"num":"25+","label":"Brand Clients","target":25,"suffix":"+"},{"num":"4+","label":"Years in Marketing","target":4,"suffix":"+"},{"num":"300%","label":"Avg. Engagement Lift","target":300,"suffix":"%"}]'
-        data-pillars='[{"title":"Strategy First Approach","text":"Every action is backed by a clear commercial blueprint."},{"title":"Content That Performs","text":"Assets engineered to stop the thumb and convert."},{"title":"Platform-Specific Expertise","text":"Tailored strategies for Instagram, TikTok, Facebook, and YouTube."},{"title":"Proven Experience Across Industries","text":"Restaurants, hotels, real estate, e-commerce, and corporate brands."},{"title":"Data-Driven Optimization","text":"Iterate content strategy based on cold data, not guesswork."},{"title":"Consistent & Scalable Growth","text":"Reliable systems that allow your brand to grow consistently."},{"title":"End to End Management","text":"From strategy to analysis, I manage it all."},{"title":"Cross-Cultural Market Insight","text":"Deep insights on international demographics and preferences."}]'
-        data-skills='["Social Media Strategy","Social Media Marketing","Content Strategy","Content Management","Digital Strategy","Media Strategy","Social Media Optimization","Social Media Advertising","Digital Media","Community Management"]'></div>
-      <div class="service-data-item" data-id="2" data-number="03" data-name="Influencer Marketing" data-subhead="I grow your brand with strategic influencer marketing." data-desc="From creator partnerships to high-converting campaigns designed to build trust, expand reach, and drive real sales."
-        data-metrics='[{"num":"250+","label":"Campaigns Launched","target":250,"suffix":"+"},{"num":"300+","label":"Verified Influencers","target":300,"suffix":"+"},{"num":"10+","label":"Industries Served","target":10,"suffix":"+"},{"num":"7x","label":"Avg. ROAS Delivered","target":7,"suffix":"x"}]'
-        data-pillars='[{"title":"Right Influencers","text":"Niche relevance over vanity follower counts."},{"title":"Strategy-First Approach","text":"Every campaign backed by a performance strategy."},{"title":"Measurable Results","text":"Track creator performance with custom codes and links."},{"title":"Verified Global Creator Network","text":"Curated network across lifestyle, fashion, food, tech, real estate."},{"title":"End-to-End Campaign Management","text":"From sourcing to reporting, I handle everything."},{"title":"Long-Term Brand Growth","text":"Ambassador relationships for compounding brand trust."}]'
-        data-skills='["Influencer Hunting","Content Optimization","Script Writing","Brainstorming","Budget Negotiation","Client-Centered Interventions","Audience Planning","Marketing Campaign Management"]'></div>
-      <div class="service-data-item" data-id="3" data-number="04" data-name="Lead Generation" data-subhead="I engineer high-intent lead generation engines that capture, qualify, and convert premium prospects." data-desc="Across B2B and B2C landscapes, I build systems that deliver clean, high-value opportunities to your sales pipeline."
-        data-metrics='[{"num":"6-Figure","label":"DTC Lead Gen Scale"},{"num":"$45K/mo","label":"Mortgage Pipeline"},{"num":"28%","label":"Conversion Uplift","target":28,"suffix":"%"},{"num":"100%","label":"Data Transparency"}]'
-        data-pillars='[{"title":"High-Intent Funnel Architecture","text":"Multi-stage lead capture networks that pre-qualify users."},{"title":"Hyper-Targeted Acquisition","text":"Navigating complex spaces like finance and real estate."}]'
-        data-skills='["Lead Generation","PPC Campaigns","Paid Search Campaigns","Landing Page Optimization","Conversion Rate Optimization","Keyword Research","Account Management","Marketing Campaigns","Campaigns","Online Marketing"]'></div>
-      <div class="service-data-item" data-id="4" data-number="05" data-name="Content Marketing" data-subhead="I deploy multi-platform content ecosystems that nurture cold traffic into revenue-generating consumer bases." data-desc="From discovery to trust, I turn static content into a real customer acquisition asset."
-        data-metrics='[{"num":"45%","label":"Instagram Growth","target":45,"suffix":"%"},{"num":"10+","label":"Active Content Pipelines","target":10,"suffix":"+"},{"num":"4+","label":"Years Asset Direction","target":4,"suffix":"+"},{"num":"100%","label":"Omnichannel Alignment"}]'
-        data-pillars='[{"title":"Full-Funnel Distribution Matrix","text":"Guide users from discovery to trust and conversion."},{"title":"AI-Driven Creative Scaling","text":"Blend AI tools with marketing data for content variations."}]'
-        data-skills='["Content Marketing","Content Strategy","Content Writing","Content Management","Digital Content Management","Digital Content","Media Marketing","Digital Media","Web Content Writing","Content Writing and Content Management"]'></div>
-      <div class="service-data-item" data-id="5" data-number="06" data-name="Market Research & Strategy" data-subhead="I decode audience behavior patterns, search trends, and competitor vulnerabilities to construct bulletproof commercial playbooks." data-desc="Every marketing decision becomes mathematically backed, eliminating guesswork entirely."
-        data-metrics='[{"num":"100%","label":"Guesswork Eliminated"},{"num":"50+","label":"Competitor Audits Run","target":50,"suffix":"+"},{"num":"4+","label":"Years Data Diagnostics","target":4,"suffix":"+"},{"num":"1:1","label":"Algorithm Alignment"}]'
-        data-pillars='[{"title":"Psychology-Backed Consumer Mapping","text":"Identify hidden emotional triggers that drive clicks and conversions."},{"title":"Advanced Performance Tracking","text":"GTM and GA4 architectures for real-time intent data."}]'
-        data-skills='["Market Research","Marketing Strategy","Digital Media Strategy","Strategic Planning","Market Planning","Competitive Strategies","Trend Analysis","Data Analysis","Google Analytics 4","Google Tag Manager"]'></div>
+      <div class="service-data-item" data-id="0" data-number="01" data-name="Performance Marketing" data-subhead="I build high-performing, data-driven performance marketing funnels that boosts your business goals." data-desc="From high-converting ad campaigns to full-funnel strategies designed to attract, engage, and convert your ideal audience." 
+        data-metrics='[{"num":"$2M+","label":"Ad Spend Managed","target":2,"prefix":"$","suffix":"M+"},{"num":"350+","label":"Campaigns Launched","target":350,"suffix":"+"},{"num":"7x","label":"Average ROAS","target":7,"suffix":"x"},{"num":"85%","label":"Client Satisfaction Rate","target":85,"suffix":"%"}]'
+data-pillars='[{"title":"ROI-Focused Strategy","text":"Every campaign I build is engineered with one clear goal: absolute profitability, actual revenue and no vanity clicks or empty impressions."},{"title":"Data-Driven Decision Making","text":"I track every dollar spent, cutting underperforming ads fast to avoid creative fatigue, high CPMS and double down on winners by analyzing performance metrics to continuously optimize results and eliminate wasted spend."},{"title":"High-Converting Creatives","text":"I design compelling assets by writing ad copy and structuring ad visuals crafted to stop the scroll, pull people in, and get them to take action."},{"title":"Multi-Platform Expertise","text":"Your campaigns are deployed where your buyers actually spend time—spanning Meta, Google, TikTok, Pinterest, and LinkedIn."},{"title":"Continuous Optimization","text":"Paid media is never set and forget. I constantly test new hooks, angles, and audiences to keep sales flowing smoothly."},{"title":"Funnel & Page Optimization","text":"Getting the click is only half the battle. I build conversion frameworks that scale budgets efficiently by optimizing your landing pages so visitors actually buy once they land."}]'
+        data-skills='["Meta Ads","Google Ads","Pinterest Ads","TikTok Ads","LinkedIn Ads","A/B Testing","Competitor & Keyword Research","Creative Iteration","Audience Nurturing"]'></div>
+
+
+<!-- SERVICE 2: Social Media Marketing -->
+      <div class="service-data-item" data-id="1" data-number="02" data-name="Social Media Marketing" data-subhead="I scale your brand with social media strategies that transform casual scrollers into paying clients." data-desc="From scroll-stopping content to conversion-driven campaigns designed to attract, engage, and convert your ideal audience."
+        data-metrics='[{"num":"300%","label":"Avg. Engagement Lift","target":300,"suffix":"%"},{"num":"4.8%","label":"Avg. CTR","target":4.8,"suffix":"%"},{"num":"3.75x","label":"Profile Traffic Increase","target":3.75,"suffix":"x"},{"num":"45%","label":"Inbound Inquiry Growth","target":45,"suffix":"%"}]'
+  data-pillars='[{"title":"Strategy &amp; Planning","text":"I map out customized, platform-specific blueprints for Instagram, TikTok, Facebook, YouTube and GBP to align your audience behavior with business goals."},{"title":"Creative Direction","text":"I engineer thumb-stopping content, persuasive copy, and visual assets built to capture immediate attention and drive action."},{"title":"End-to-End Campaign Management","text":"I handle the entire operational workflow, from content strategy, scheduling and publishing to active audience nurturing, data analysis and community management."},{"title":"Multi-Industry &amp; Market Insight","text":"I leverage cross-cultural demographics and localized consumer behavior to scale brands across real estate, hospitality, education, finance, health, wellness, and e-commerce sectors."},{"title":"Cold Data &amp; Growth Analytics","text":"I track real-time audience metrics and campaign results to continuously refine strategy, cutting ad waste and scaling what works."},{"title":"Predictable Revenue Systems","text":"I implement reliable growth frameworks that turn organic reach and paid channels into scalable, long-term brand equity."}]'
+  data-skills='["Social Media Strategy","Social Media Optimization","Social Media Advertising","Digital Media Strategy","Community Growth & Engagement","Content Strategy & Management","Data & Trend Analysis"]'></div>
+
+<!-- SERVICE 3: Influencer Marketing -->
+      <div class="service-data-item" data-id="2" data-number="03" data-name="Influencer Marketing" data-subhead="I execute impactful creator partnerships that turn social proof into predictable revenue." data-desc="From vetting top-tier creators to managing end-to-end campaign logistics, I architect influencer strategies that build brand authority, trust, expand reach, drive real sales and convert audiences into loyal buyers."
+        data-metrics='[{"num":"15+","label":"Creator Partnerships Managed","target":15,"suffix":"+"},{"num":"350+","label":"Verified Influencers","target":350,"suffix":"+"},{"num":"8.5x","label":"Avg. Influencer Campaign ROI","target":8.5,"suffix":"x"},{"num":"2.5x","label":"Conversion Rate vs. Standard Paid Ads","target":2.5,"suffix":"x"}]'
+<div class="service-data-item" data-id="2" data-number="03" data-name="Influencer Marketing" data-subhead="I grow your brand with strategic influencer marketing." data-desc="From creator partnerships to high-converting campaigns designed to build trust, expand reach, and drive real sales."
+  data-metrics='[{"num":"250+","label":"Campaigns Launched","target":250,"suffix":"+"},{"num":"300+","label":"Verified Influencers","target":300,"suffix":"+"},{"num":"10+","label":"Industries Served","target":10,"suffix":"+"},{"num":"7x","label":"Avg. ROAS Delivered","target":7,"suffix":"x"}]'
+  data-pillars='[{"title":"Right Influencers","text":"I prioritize authentic niche alignment, verified audience demographics, and real engagement rates over empty vanity metrics."},{"title":"Strategy-First Approach","text":"I structure every creator collaboration around clear performance KPIs, custom conversion funnels, and trackable affiliate setups."},{"title":"Performance Tracking","text":"I monitor real-time creator impact using unique promo codes, custom UTM parameters, and transparent attribution reporting."},{"title":"Verified Global Creator Network","text":"I leverage an established network of pre-vetted creators across real estate, e-commerce, lifestyle, tech, fashion, food, and corporate sectors."},{"title":"End-to-End Campaign Management","text":"I direct the full execution cycle—handling creator sourcing, outreach, contract negotiation, script review, asset delivery, reporting and final payout logistics."},{"title":"Long-Term Brand Growth","text":"I convert top-performing one-off collaborations into long-term brand ambassador partnerships that compound trust and lower long-term acquisition costs."}]'
+  data-skills='["Influencer Hunting","Budget Negotiation","Creative Brainstorming","Script Writing","Client-Centered Interventions","Audience Identification","Influencer Campaign Oversight"]'></div>
+
+
+
+<!-- SERVICE 4: Lead Generation -->
+      <div class="service-data-item" data-id="3" data-number="04" data-name="Lead Generation" data-subhead="I engineer high-intent lead generation engines that capture, qualify, and convert premium prospects." data-desc="Across B2B and B2C landscapes, I build end-to-end capture systems that eliminate unqualified tire-kickers and deliver clean, sales-ready opportunities directly to your pipeline."
+  data-metrics='[{"num":"$75K/mo","label":"Pipeline Value Generated"},{"num":"85%","label":"Lead Qualification Rate"},{"num":"3.2x","label":"Conversion Rate Increase"},{"num":"10K+","label":"Qualified Leads Captured"}]'
+  data-pillars='[{"title":"Intent Funnel Architecture","text":"I design multi-stage acquisition networks that filter out cold traffic and pre-qualify leads before they reach your sales team."},{"title":"Multi-Channel Targeting","text":"I execute laser-targeted campaigns across Google, Meta, and LinkedIn to capture high-ticket prospects in real estate, finance, and professional services."},{"title":"High-Converting Offer Design","text":"I structure compelling lead magnets, hooks, and value propositions that motivate prospects to exchange contact information immediately."},{"title":"Frictionless Form Strategy","text":"I build and optimize progressive profiling forms that maximize completion rates while gathering essential qualification data."},{"title":"Automated Lead Routing","text":"I integrate lead flow channels directly into your CRM, ensuring immediate automated follow-up and zero drop-off in sales response time."},{"title":"Conversion Rate Optimization","text":"I continuously test landing page layouts, headlines, and calls-to-action to systematically lower Cost Per Lead (CPL) and maximize pipeline velocity."}]'
+  data-skills='["PPC Campaigns","Landing Page Strategy & Optimization","B2B & B2C Campaigns","Conversion Rate Optimization","Account Management","Funnel Building","User Journey Mapping","Offer Creation","Value Framing","Form Creation","Lead Flow Integration"]'></div>
+
+<!-- SERVICE 5: Content Marketing -->
+      <div class="service-data-item" data-id="4" data-number="05" data-name="Content Marketing" data-subhead="I build multi-platform content ecosystems that nurture cold traffic into loyal, paying consumer bases." data-desc="From initial post discovery to long-term trust, I turn everyday posts, blogs, and videos into clear sales assets for your business."
+  data-metrics='[{"num":"35%","label":"Organic Traffic Growth","target":35,"suffix":"%"},{"num":"65%","label":"Returning Audience Rate","target":65,"suffix":"%"},{"num":"950+","label":"Brand Assets Produced","target":950,"suffix":"+"},{"num":"2.8x","label":"Social Engagement Lift","target":2.8,"suffix":"x"}]'
+  data-pillars='[{"title":"Full-Funnel Distribution","text":"I design content steps that smoothly guide new readers from initial interest toward trusting your products and services."},{"title":"Modern Creative Scaling","text":"I combine smart tools with performance data to produce multiple variations of high-performing visual and text assets quickly."},{"title":"Cross-Platform Publishing","text":"I adapt and structure your core message so it fits naturally across blogs, social networks, news outlets, and video feeds."},{"title":"Clear Brand Messaging","text":"I write simple, engaging copy that highlights your exact value proposition without confusing your audience with unnecessary buzzwords."},{"title":"High-Value Case Studies","text":"I turn client success stories and project results into detailed, highly persuasive reading materials that close deals faster."},{"title":"Content Repurposing","text":"I turn one main piece of content—like an interview or article—into dozens of short posts, reels, and newsletter updates."}]'
+  data-skills='["Digital Content Management","Content Optimization","Content Strategy","Content Marketing","Content Scheduling","Content Analysis","Cross-Platform Content Management","Social Media Writing","Copywriting","Web Content Writing","Technical Writing","Blog Writing","Case Studies"]'></div>
+
+
+<!-- SERVICE 6: Market Research & Strategy -->
+      <div class="service-data-item" data-id="5" data-number="06" data-name="Market Research & Strategy" data-subhead="I study audience behavior, search trends, and competitor gaps to build clear, reliable growth plans." data-desc="Instead of relying on guesswork or generic templates, I use real market data to make sure every campaign dollar goes toward what actually work."
+data-metrics='[{"num":"150+","label":"In-Depth Competitor Audits","target":150,"suffix":"+"},{"num":"20+","label":"Go-To-Market Strategies Launched","target":20,"suffix":"+"},{"num":"95%","label":"Strategy Execution Accuracy","target":95,"suffix":"%"},{"num":"80%","label":"Clearer Audience Identification","target":80,"suffix":"%"}]'
+  data-pillars='[{"title":"Consumer Psychology Mapping","text":"I identify what your ideal customers care about most, uncovering the exact needs and motivations that make them choose your brand over others."},{"title":"Competitor Benchmarking","text":"I break down what your main competitors are doing right—and where they are failing—so we can claim missing market share and stay ahead."},{"title":"Go-To-Market Planning","text":"I build step-by-step launch plans for new products or services, covering everything from initial audience targeting to final offer placement."},{"title":"Search & Trend Analysis","text":"I track live market shifts and search habits so your marketing stays relevant before demand changes or costs go up."},{"title":"Custom Tracking Setup","text":"I set up clean tracking systems using GA-4 and GTM so you can see exactly where your website traffic comes from and what actions people take."},{"title":"Positioning & Pricing Strategy","text":"I help frame your offer and price point so prospects immediately see the value, making sales conversations much smoother."}]'
+  data-skills='["Market Research","Go-To-Market (GTM) Strategy","Competitor Intelligence & Benchmarking","Competitive Strategies","Market Trend Analysis","Strategic Market Planning","Consumer Behavior","Google Analytics 4 (GA-4)","Google Tag Manager (GTM)"]'></div>
+
     </div>
 
     <div id="serviceNodesContainer"></div>
   </div>
 
   <div class="services-footer-buttons">
-<a href="assets/docs/Haider-Ali-Resume.pdf" target="_blank" class="btn-primary" id="servicesResumeBtn">Download Resume</a>
+<a href="assets/docs/Haider-Ali-Resume.pdf" download="Haider-Ali-Resume.pdf" class="btn-primary" id="servicesResumeBtn">Download Resume</a>
     <a href="#contact" class="btn-ghost" id="contactBtn">Contact Me</a>
   </div>
 </section>
@@ -5134,18 +5545,21 @@
   <div class="exp-container">
     <div class="exp-label">Experience</div>
     <h2 class="exp-title">
-      The Path of Professional <span class="orange">Growth & Scalable Value Creation</span>
+      The Path of Professional <span class="orange">Growth & Scalable Value Creation.</span>
     </h2>
     <p class="exp-subhead">A strategic documentation of managed accounts, scalable media spending architectures, and high-performance brand operations.</p>
 
     <div class="exp-layout">
       <div class="exp-spine-col" id="expSpineCol">
         <div class="connector-line" id="connectorLine"></div>
-        <div class="connector-dot" id="connectorDot"></div>
         <div class="year-reel-wrapper">
           <div class="year-static">20</div>
           <div class="year-reel-window">
             <div class="year-reel-drum" id="yearReelDrum"></div>
+          </div>
+          <div class="year-reel-nav" aria-label="Year navigation">
+            <button type="button" class="year-nav-btn" id="yearNavUp" title="Newer year">▲</button>
+            <button type="button" class="year-nav-btn" id="yearNavDown" title="Older year">▼</button>
           </div>
         </div>
       </div>
@@ -5164,7 +5578,7 @@
   <div class="projects-container">
     <div class="section-label">Projects</div>
     <h2 class="section-title">
-      Monetizing Attention to Engineer <span class="orange-accent">Scalable Digital Presence</span> of Businesses
+      Monetizing Attention to Engineer <span class="orange-accent">Scalable Digital Presence</span> of Businesses.
     </h2>
     <p class="section-subhead">Mining raw campaign metrics to drive predictable, aggressive, high-volume customer acquisition momentum.</p>
 
@@ -5174,59 +5588,78 @@
     <!-- Sun (Center) -->
     <div class="sun">
       <div class="sun-core">
-        <span class="sun-subtext">Explore</span>
-        <span class="sun-text">My Projects</span>
+        <span class="sun-subtext">My</span>
+        <span class="sun-text">Projects</span>
       </div>
       <div class="sun-glow"></div>
       <div class="sun-ring sun-ring-1"></div>
       <div class="sun-ring sun-ring-2"></div>
     </div>
 
-    <!-- Orbit Lines -->
-<div class="orbit orbit-1" style="width:280px; height:280px;"></div>
-<div class="orbit orbit-2" style="width:420px; height:420px;"></div>
-<div class="orbit orbit-3" style="width:560px; height:560px;"></div>
+    <!-- Orbit Lines (CSS-sized; no oversized inline widths that overflow mobile) -->
+<div class="orbit orbit-1"></div>
+<div class="orbit orbit-2"></div>
+<div class="orbit orbit-3"></div>
+<div class="orbit orbit-4"></div>
 
-    <!-- Planets with proper orbital paths -->
-    <div class="planet planet-1" data-category="BFSI">
-      <span class="planet-name">BFSI</span>
-      <span class="planet-full">BFSI</span>
+    <!-- Planets — full category names, unique orbits -->
+    <div class="planet planet-1" data-category="BFSI (Banking, Financial Services & Insurance)">
+      <span class="planet-name">BFSI (Banking, Financial Services & Insurance)</span>
+      <div class="planet-hover-tip">Click to View Full Project Details (Niche, Budget, Brief, Ad Spend's Dashboard, Execution Strategies, Outcomes).</div>
       <div class="planet-glow"></div>
     </div>
 
     <div class="planet planet-2" data-category="E-Commerce & Retail">
-      <span class="planet-name">E-Commerce</span>
-      <span class="planet-full">E-Commerce & Retail</span>
+      <span class="planet-name">E-Commerce & Retail</span>
+      <div class="planet-hover-tip">Click to View Full Project Details (Niche, Budget, Brief, Ad Spend's Dashboard, Execution Strategies, Outcomes).</div>
       <div class="planet-glow"></div>
     </div>
 
     <div class="planet planet-3" data-category="Education & Training">
-      <span class="planet-name">Education</span>
-      <span class="planet-full">Education & Training</span>
+      <span class="planet-name">Education & Training</span>
+      <div class="planet-hover-tip">Click to View Full Project Details (Niche, Budget, Brief, Ad Spend's Dashboard, Execution Strategies, Outcomes).</div>
       <div class="planet-glow"></div>
     </div>
 
     <div class="planet planet-4" data-category="Health, Wellness & Fitness">
-      <span class="planet-name">Health</span>
-      <span class="planet-full">Health, Wellness & Fitness</span>
+      <span class="planet-name">Health, Wellness & Fitness</span>
+      <div class="planet-hover-tip">Click to View Full Project Details (Niche, Budget, Brief, Ad Spend's Dashboard, Execution Strategies, Outcomes).</div>
       <div class="planet-glow"></div>
     </div>
 
-    <div class="planet planet-5" data-category="Real Estate & Construction">
-      <span class="planet-name">Real Estate</span>
-      <span class="planet-full">Real Estate & Construction</span>
+    <div class="planet planet-5" data-category="Human Resources & Recruitment">
+      <span class="planet-name">Human Resources & Recruitment</span>
+      <div class="planet-hover-tip">Click to View Full Project Details (Niche, Budget, Brief, Ad Spend's Dashboard, Execution Strategies, Outcomes).</div>
       <div class="planet-glow"></div>
     </div>
 
-    <div class="planet planet-6" data-category="Business Services & Professional Networking">
-      <span class="planet-name">Business</span>
-      <span class="planet-full">Business Services & Professional Networking</span>
+    <div class="planet planet-6" data-category="Business & Professional Networking">
+      <span class="planet-name">Business & Professional Networking</span>
+      <div class="planet-hover-tip">Click to View Full Project Details (Niche, Budget, Brief, Ad Spend's Dashboard, Execution Strategies, Outcomes).</div>
       <div class="planet-glow"></div>
     </div>
 
-    <div class="planet planet-7" data-category="Research">
+    <div class="planet planet-7" data-category="Real Estate & Construction">
+      <span class="planet-name">Real Estate & Construction</span>
+      <div class="planet-hover-tip">Click to View Full Project Details (Niche, Budget, Brief, Ad Spend's Dashboard, Execution Strategies, Outcomes).</div>
+      <div class="planet-glow"></div>
+    </div>
+
+    <div class="planet planet-8" data-category="Accounting & Financial Services">
+      <span class="planet-name">Accounting & Financial Services</span>
+      <div class="planet-hover-tip">Click to View Full Project Details (Niche, Budget, Brief, Ad Spend's Dashboard, Execution Strategies, Outcomes).</div>
+      <div class="planet-glow"></div>
+    </div>
+
+    <div class="planet planet-9" data-category="Hospitality & Entertainment">
+      <span class="planet-name">Hospitality & Entertainment</span>
+      <div class="planet-hover-tip">Click to View Full Project Details (Niche, Budget, Brief, Ad Spend's Dashboard, Execution Strategies, Outcomes).</div>
+      <div class="planet-glow"></div>
+    </div>
+
+    <div class="planet planet-10" data-category="Research">
       <span class="planet-name">Research</span>
-      <span class="planet-full">Research</span>
+      <div class="planet-hover-tip">Click to View Full Details of All Academic Projects.</div>
       <div class="planet-glow"></div>
     </div>
   </div>
@@ -5238,9 +5671,15 @@
     <!-- Projects Grid -->
     <div id="projectsGrid"></div>
 
-    <!-- View More Container -->
-    <div id="viewMoreContainer" style="display: none;" class="view-more-container">
-      <button class="view-more-btn" id="viewMoreBtn">View More Projects</button>
+    <!-- Mosaic Categories (Professional Projects entry) -->
+    <div id="categoryMosaic" class="category-mosaic" style="display: none;"></div>
+
+    <!-- Pagination -->
+    <div id="viewMoreContainer" style="display: none;" class="view-more-container projects-pagination">
+      <button type="button" class="page-arrow-btn" id="projectsPrevBtn" aria-label="Previous projects">▲</button>
+      <button class="view-more-btn" id="viewMoreBtn">View More</button>
+      <span class="page-indicator" id="projectsPageIndicator"></span>
+      <button type="button" class="page-arrow-btn" id="projectsNextBtn" aria-label="Next projects">▼</button>
     </div>
 
     <!-- Logos Marquee - BEFORE buttons (Two Rows) -->
@@ -5256,8 +5695,7 @@
     <!-- Footer Buttons - AFTER marquee -->
     <div class="projects-footer">
       <button class="btn-ghost" id="academicProjectsBtn">Academic Projects</button>
-      <button class="btn-primary" id="contactFooterBtn">Contact Me</button>
-      <button class="btn-ghost" id="professionalProjectsBtn">Professional Projects</button>
+      <button class="btn-primary btn-projects-glow" id="professionalProjectsBtn">View All Professional Projects</button>
     </div>
 
   </div>
@@ -5273,7 +5711,7 @@
   <div class="edu-container">
     <div class="edu-label">Education</div>
     <h2 class="edu-title">
-      The Academic Excellence Behind My <span class="orange">Performance Strategy</span>
+      The Academic Excellence Behind My <span class="orange">Performance Strategy.</span>
     </h2>
     <p class="edu-subhead">A rigorous grounding in psychometrics, experimental methodology, and human data streams applied to consumer tracking systems.</p>
 
@@ -5297,7 +5735,7 @@
           <span class="edu-degree">BS, Applied Psychology</span>
           <span class="edu-institution">University of Okara</span>
           <div class="edu-compact-meta">
-            CGPA: <span class="grade-highlight">3.76</span> / 4.00
+            CGPA: <span class="grade-highlight">3.61</span> / 4.00
           </div>
           <div class="edu-details">
             <div class="edu-narrative">Mastered behavioral dynamics, advanced psychometric scale development, and statistical analysis. This explicit academic framework allows me to deconstruct consumer friction points and build high-converting conversion funnels based on verified behavioral analytics.</div>
@@ -5313,7 +5751,7 @@
         <div class="edu-body">
           <span class="edu-timeline-stamp">2017 – 19</span>
           <span class="edu-degree">F.Sc (Pre-Medical)</span>
-          <span class="edu-institution">Govt Postgraduate College Okara</span>
+          <span class="edu-institution">Govt. Postgraduate College, Okara</span>
           <div class="edu-compact-meta">
             Grade: <span class="grade-highlight">A+</span> (Pre-Medical)
           </div>
@@ -5331,7 +5769,7 @@
         <div class="edu-body">
           <span class="edu-timeline-stamp">2016 – 18</span>
           <span class="edu-degree">Matriculation</span>
-          <span class="edu-institution">Govt. M. C. Boys High School Okara</span>
+          <span class="edu-institution">Govt. M. C. Boys High School, Okara</span>
           <div class="edu-compact-meta">
             Grade: <span class="grade-highlight">A+</span> (Pre-Medical)
           </div>
@@ -5355,7 +5793,7 @@
       <div class="rec-label">Recommendations</div>
 
       <h2 class="rec-title">
-        <span class="navy">Read What Colleagues Say About My</span> <span class="orange">Strategic Impact & Professional Execution</span>
+        <span class="navy">Read What Colleagues Say About My</span> <span class="orange">Strategic Impact & Professional Execution.</span>
       </h2>
 
       <p class="rec-subhead">Verifiable recommendations and professional endorsements from directors, strategy partners, and technical mentors across the agency space.</p>
@@ -5381,7 +5819,7 @@
     <div class="fun-container">
       <div class="fun-label">Fun Facts</div>
       <h2 class="fun-title">
-        The <span class="orange"> Beating Human Heart</span> Behind the Desk
+        The <span class="orange"> Beating Human Heart</span> Behind the Desk.
       </h2>
       <p class="fun-subhead">Proof that even an architect of successful campaigns may have a glitch or two (or maybe more).</p>
 
@@ -5639,7 +6077,7 @@
       <div class="contact-label">Contact</div>
 
       <h2 class="contact-title">
-        <span class="navy">Let's Build</span> <span class="orange">Scalable Funnels </span> <span class="navy">for</span> <span class="orange">Your Business</span>
+        <span class="navy">Let's Build</span> <span class="orange">Scalable Funnels </span> <span class="navy">for</span> <span class="orange">Your Business.</span>
       </h2>
 
       <p class="contact-subhead">Reach out to discuss consumer psychology architecture, paid media performance tracking, or a high-velocity marketing partnership.</p>
@@ -5658,7 +6096,7 @@
 </div>
             <div class="contact-text">
               <span class="contact-label-small">WhatsApp</span>
-              <span class="contact-value">+92 311 0177836</span>
+              <span class="contact-value">+92 311 01 77 836</span>
             </div>
           </a>
 
@@ -5683,7 +6121,7 @@
 </div>
             <div class="contact-text">
               <span class="contact-label-small">LinkedIn</span>
-              <span class="contact-value">linkedin.com/in/haiderr-ali/</span>
+              <span class="contact-value">linkedin.com/in/haiderr-ali</span>
             </div>
           </a>
 
@@ -5717,7 +6155,7 @@
             </div>
 
             <div class="form-group">
-              <input type="tel" id="phone" placeholder="+92 XXX XXXXXXX" />
+              <input type="tel" id="phone" placeholder="+92 XXX XXX XXXX" />
               <div class="data-flow-line"></div>
             </div>
 
@@ -5766,32 +6204,41 @@
               <div class="footer-contact-icon">
                 <svg viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 0 1-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 0 1-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 0 1 2.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0 0 12.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 0 0 5.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 0 0-3.48-8.413z"/></svg>
               </div>
-              +92 311 0177836
+              +92 311 01 77 836
             </a>
 
             <!-- Email -->
             <a href="mailto:haydraly1@gmail.com" class="footer-contact-item">
               <div class="footer-contact-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="4" width="20" height="16" rx="2"/><path d="M22 4L12 13 2 4"/></svg>
+              <svg viewBox="0 0 512 512" width="14" height="14" fill="#c4c8d0">
+  <path d="M464 64H48C21.5 64 0 85.5 0 112v288c0 26.5 21.5 48 48 48h416c26.5 0 48-21.5 48-48V112c0-26.5-21.5-48-48-48zM48 96h416c8.8 0 16 7.2 16 16v41.4c-21.9 18.5-53.2 45-150.6 112.3-16.5 11.4-39.1 17.4-57.4 17.4s-40.9-6-57.4-17.4C101.2 198.4 69.9 171.9 48 153.4V112c0-8.8 7.2-16 16-16zm416 320H48c-8.8 0-16-7.2-16-16V195.2c23.5 18.9 55.4 44.7 93.2 74.7 23.7 18.9 53.8 30.1 82.8 30.1s59.1-11.2 82.8-30.1c37.8-30 69.7-55.8 93.2-74.7V400c0 8.8-7.2 16-16 16z"/>
+</svg>
               </div>
               haydraly1@gmail.com
             </a>
 
             <!-- LinkedIn -->
             <a href="https://www.linkedin.com/in/haiderr-ali/" target="_blank" rel="noopener" class="footer-contact-item">
-              <div class="footer-contact-icon">
-                <svg viewBox="0 0 24 24"><path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/></svg>
+            <div class="footer-contact-icon">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#c4c8d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/>
+  <polyline points="13 2 13 9 20 9"/>
+</svg>
               </div>
-              linkedin.com/in/haiderr-ali/
+              linkedin.com/in/haiderr-ali
             </a>
 
             <!-- Contact Me -->
-            <a href="#contact" class="footer-contact-item">
-              <div class="footer-contact-icon">
-                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>
-              </div>
-              Contact Me
-            </a>
+          <a href="https://haider-ali-resume.pages.dev/" class="footer-contact-item">
+            <div class="footer-contact-icon">
+              <svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="#c4c8d0" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <path d="M13 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V9z"/>
+  <polyline points="13 2 13 9 20 9"/>
+</svg>
+            </div>
+            View Resume
+          </a>
+
 
           </div>
         </div>
@@ -5800,7 +6247,7 @@
         <div>
           <div class="footer-brand-wrapper">
             <div class="footer-brand-top">
-              <img src="assets/branding/favicon.png" alt="Haider Ali" />
+              <img src="assets/branding/favicon.png" alt="Haider Ali" width="34" height="34" decoding="async" fetchpriority="high" />
               <span class="footer-brand-name">Haider Ali</span>
             </div>
             <div class="footer-brand-role">Social Media & Performance Marketer</div>
@@ -5824,15 +6271,90 @@
     </div>
   </footer>
 
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
 <script>
-  gsap.registerPlugin(ScrollTrigger);
+(function() {
+  if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+    gsap.registerPlugin(ScrollTrigger);
+  }
+  function whenGsapReady(cb) {
+    if (typeof gsap !== 'undefined') { cb(); return; }
+    var tries = 0;
+    var t = setInterval(function() {
+      tries++;
+      if (typeof gsap !== 'undefined') {
+        clearInterval(t);
+        if (typeof ScrollTrigger !== 'undefined') gsap.registerPlugin(ScrollTrigger);
+        cb();
+      } else if (tries > 80) {
+        clearInterval(t);
+        cb();
+      }
+    }, 50);
+  }
+  window.whenGsapReady = whenGsapReady;
+})();
 </script>
 
 <script>
 (function() {
-    window.addEventListener('load', function() {
+    function forceHeroVisible() {
+      var hero = document.getElementById('hero');
+      if (hero) hero.classList.add('hero-booting');
+      document.querySelectorAll('#haiderLine .name-letter, #aliLine .name-letter').forEach(function(el) {
+        el.style.opacity = '1';
+        el.style.transform = 'none';
+      });
+      ['heroDesignation','heroHook','heroSubhead','heroCTAs','impactMetrics'].forEach(function(id) {
+        var el = document.getElementById(id);
+        if (el) { el.style.opacity = '1'; el.style.transform = 'none'; }
+      });
+      document.querySelectorAll('.hero-right').forEach(function(el) {
+        el.style.opacity = '1';
+      });
+    }
+
+    // Show hero immediately — never wait on CDN/GSAP
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', forceHeroVisible);
+    } else {
+      forceHeroVisible();
+    }
+    setTimeout(forceHeroVisible, 120);
+    setTimeout(forceHeroVisible, 600);
+
+    function forceResumeDownload(e) {
+      var link = e.currentTarget;
+      var url = link.getAttribute('href');
+      if (!url) return;
+      e.preventDefault();
+      fetch(url).then(function(res) {
+        if (!res.ok) throw new Error('fetch failed');
+        return res.blob();
+      }).then(function(blob) {
+        var objectUrl = URL.createObjectURL(blob);
+        var a = document.createElement('a');
+        a.href = objectUrl;
+        a.download = link.getAttribute('download') || 'Haider-Ali-Resume.pdf';
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+        URL.revokeObjectURL(objectUrl);
+      }).catch(function() {
+        // Fallback: same-origin download attribute
+        var a = document.createElement('a');
+        a.href = url;
+        a.setAttribute('download', link.getAttribute('download') || 'Haider-Ali-Resume.pdf');
+        document.body.appendChild(a);
+        a.click();
+        a.remove();
+      });
+    }
+
+    document.addEventListener('DOMContentLoaded', function() {
       document.querySelectorAll('.profile-img[data-fallbacks]').forEach(function(img) {
-        var fallbacks = (img.getAttribute('data-fallbacks') || '').split(',');
+        var fallbacks = (img.getAttribute('data-fallbacks') || '').split(',').map(function(s){return s.trim();}).filter(Boolean);
         var idx = 0;
         img.addEventListener('error', function onErr() {
           if (idx < fallbacks.length) {
@@ -5843,12 +6365,20 @@
         });
       });
 
+      document.querySelectorAll('#heroResumeBtn, #servicesResumeBtn').forEach(function(btn) {
+        btn.addEventListener('click', forceResumeDownload);
+      });
+
       const haiderLetters = document.querySelectorAll('#haiderLine .name-letter');
       const aliLetters = document.querySelectorAll('#aliLine .name-letter');
       const subhead = document.getElementById('heroSubhead');
       const heroPortraitWrapper = document.getElementById('heroPortraitWrapper');
       
       if (haiderLetters.length === 0 || aliLetters.length === 0) return;
+      if (typeof gsap === 'undefined') { forceHeroVisible(); return; }
+
+      var heroEl = document.getElementById('hero');
+      if (heroEl) heroEl.classList.remove('hero-booting');
       
       const masterTL = gsap.timeline({ defaults: { ease: 'power3.out' } });
       
@@ -5940,45 +6470,48 @@
         ease: 'power2.out'
       }, '-=0.1')
       
-      // Count-up animation for metrics
-      .call(function() {
-        const metricNumbers = document.querySelectorAll('.metric-number');
-        metricNumbers.forEach((el, idx) => {
-          const target = parseInt(el.getAttribute('data-target'), 10);
-          const suffix = el.getAttribute('data-suffix') || '';
-          const prefix = el.getAttribute('data-prefix') || '';
-          
-          const counter = { value: 0 };
-          gsap.to(counter, {
-            value: target,
-            duration: 1.2,
-            ease: 'power2.out',
-            delay: idx * 0.1,
-            onUpdate: function() {
-              let val = Math.round(counter.value);
-              let display = prefix ? prefix + val : val.toString();
-              if (suffix) display = display + suffix;
-              el.textContent = display;
-            },
-            onComplete: function() {
-              let finalDisplay = prefix ? prefix + target : target.toString();
-              if (suffix) finalDisplay = finalDisplay + suffix;
-              el.textContent = finalDisplay;
-            }
-          });
-        });
-      });
+// Count-up animation for metrics
+.call(function() {
+  const metricNumbers = document.querySelectorAll('.metric-number');
+  metricNumbers.forEach((el, idx) => {
+    const target = parseFloat(el.getAttribute('data-target'));  // ← Changed to parseFloat
+    const suffix = el.getAttribute('data-suffix') || '';
+    const prefix = el.getAttribute('data-prefix') || '';
+    
+    const counter = { value: 0 };
+    gsap.to(counter, {
+      value: target,
+      duration: 0.4,           // ← THIS CONTROLS SPEED
+      ease: 'power2.out',
+      delay: idx * 0.03,        // ← THIS CONTROLS STAGGER DELAY
+      onUpdate: function() {
+        let val = counter.value;
+        // Keep one decimal place for values with decimals
+        let display = val % 1 === 0 ? Math.round(val) : val.toFixed(1);
+        if (prefix) display = prefix + display;
+        if (suffix) display = display + suffix;
+        el.textContent = display;
+      },
+      onComplete: function() {
+        let finalDisplay = target % 1 === 0 ? target : target.toFixed(1);
+        if (prefix) finalDisplay = prefix + finalDisplay;
+        if (suffix) finalDisplay = finalDisplay + suffix;
+        el.textContent = finalDisplay;
+      }
+    });
+  });
+});
       
       // Button handlers
       const resumeBtn = document.getElementById('heroResumeBtn');
       const growthBtn = document.getElementById('growthBtn');
       
-      if (resumeBtn) {
-        resumeBtn.addEventListener('click', function(e) {
-          e.preventDefault();
-          alert('Resume PDF will be available in the complete portfolio.');
-        });
-      }
+// if (resumeBtn) {
+//   resumeBtn.addEventListener('click', function(e) {
+//     e.preventDefault();
+//     alert('Resume PDF will be available in the complete portfolio.');
+//   });
+// }
       
       if (growthBtn) {
         growthBtn.addEventListener('click', function(e) {
@@ -5996,7 +6529,9 @@
 </script>
 
 <script>
-gsap.registerPlugin(ScrollTrigger);
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
   
   document.addEventListener('DOMContentLoaded', function() {
     
@@ -6126,7 +6661,9 @@ gsap.registerPlugin(ScrollTrigger);
 </script>
 
 <script>
-gsap.registerPlugin(ScrollTrigger);
+if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
+  gsap.registerPlugin(ScrollTrigger);
+}
   
   document.addEventListener('DOMContentLoaded', function() {
     
@@ -6375,10 +6912,10 @@ gsap.registerPlugin(ScrollTrigger);
       panels.forEach(panel => observer.observe(panel));
     }
     
-    document.getElementById('servicesResumeBtn')?.addEventListener('click', (e) => {
-      e.preventDefault();
-      alert('Resume PDF will be available in the complete portfolio.');
-    });
+   // document.getElementById('servicesResumeBtn')?.addEventListener('click', (e) => {
+     // e.preventDefault();
+    //  alert('Resume PDF will be available in the complete portfolio.');
+    // });
     document.getElementById('contactBtn')?.addEventListener('click', (e) => {
       e.preventDefault();
       const contactSection = document.getElementById('contact');
@@ -6576,6 +7113,12 @@ gsap.registerPlugin(ScrollTrigger);
       let connectorTimeout;
       let currentExpandedYear = null;
       let yearClickCount = 0;
+      function getDigitHeight() { return 40; }
+      function getCenterOffset() {
+        var win = document.querySelector('.year-reel-window');
+        var h = win ? win.clientHeight : (window.innerWidth <= 768 ? 120 : 160);
+        return (h / 2) - (getDigitHeight() / 2);
+      }
       const digitHeight = 40;
 
       // Build years: 2035 down to 2001 (higher years at top)
@@ -6706,8 +7249,9 @@ gsap.registerPlugin(ScrollTrigger);
 
         if (targetIndex === -1) return;
 
-        const offset = targetIndex * digitHeight;
-        const centerOffset = 60;
+        const dh = getDigitHeight();
+        const offset = targetIndex * dh;
+        const centerOffset = getCenterOffset();
         yearReelDrum.style.transform = 'translateY(' + (centerOffset - offset) + 'px)';
 
         document.querySelectorAll('.year-digit').forEach(function(d) {
@@ -6751,6 +7295,31 @@ gsap.registerPlugin(ScrollTrigger);
       // ============================================================
       spinToYear(currentYear, 0);
 
+      function shiftYear(delta) {
+        var years = Array.from(document.querySelectorAll('.year-digit')).map(function(d) {
+          return parseInt(d.getAttribute('data-year'), 10);
+        });
+        var idx = years.indexOf(currentExpandedYear || currentYear);
+        if (idx === -1) idx = years.indexOf(currentYear);
+        var next = years[idx - delta]; // drum is desc; up = newer = lower index
+        if (typeof next === 'number') {
+          currentExpandedYear = next;
+          yearClickCount = 0;
+          spinToYear(next, 0);
+        }
+      }
+      document.getElementById('yearNavUp')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        shiftYear(1);
+      });
+      document.getElementById('yearNavDown')?.addEventListener('click', function(e) {
+        e.preventDefault();
+        shiftYear(-1);
+      });
+      window.addEventListener('resize', function() {
+        if (currentExpandedYear) spinToYear(currentExpandedYear, yearClickCount);
+      });
+
       // ============================================================
       // GSAP ENTRANCE ANIMATIONS
       // ============================================================
@@ -6789,25 +7358,25 @@ gsap.registerPlugin(ScrollTrigger);
   // COMPLETE PROFESSIONAL PROJECTS (20 Projects)
   // ============================================
   const professionalProjects = [
-    { id: 1, category: "BFSI", niche: "Mortgage", title: "The $1M+ Mortgage Lead Generation Scaling (Google Ads)", budget: "CAD $45,000/month", logo: "assets/logos/clients/NuBorrow-logo.png", dashboard: "assets/dashboards/FL-NuBorrow-analytics.png", brief: "I took over a mortgage and lending account where lead costs had climbed to CAD $700–800 per lead across mortgage, HELOC, home equity loan, and low down-payment campaigns. The objective was to improve efficiency without compromising lead volume.", execution: "I rebuilt the optimization framework using structured Google Ads audits, search term analysis, negative keyword expansion, audience refinement, bid optimization, quality score improvements, landing page reviews, and enhanced tracking through GA4 and GTM. I also leveraged behavioral intent signals to prioritize high-converting search traffic and reduce acquisition friction.", outcome: "Reduced CPL from CAD $700–800 to CAD $130–180. Lowered acquisition costs by more than 75%. Optimized multiple lending product campaigns simultaneously. Improved performance across a CAD $45,000/month media budget.", skills: ["Google Ads", "Google Analytics 4", "Google Tag Manager", "Google Keyword Planner", "Search Term Audits", "Negative Keywords", "Audience Targeting", "Bid Optimization", "Conversion Tracking", "Landing Page Analysis"] },
-    { id: 2, category: "BFSI", niche: "Mortgage", title: "6-Figure DTC Financial Services Niche Lead Generation (Meta Ads)", budget: "CAD $25,000/month", logo: "assets/logos/clients/RatesWise-logo.png", dashboard: "assets/dashboards/FL-RatesWise-analytics.png", brief: "I managed Meta Ads for a direct-to-consumer financial services brand operating in a highly competitive and compliance-heavy market. The challenge was maintaining consistent lead flow while continuously refreshing creatives to combat audience fatigue and rising acquisition costs.", execution: "I led the account for over 1.5 years, overseeing strategy, creative direction, client communication, and campaign optimization. I pioneered AI-generated UGC workflows to rapidly test new messaging angles, behavioral triggers, and creative concepts while reducing production bottlenecks. Using GA4 insights, Meta Pixel, CAPI, competitor intelligence, and funnel analysis, I continuously refined audience targeting and creative performance across the entire customer journey.", outcome: "Managed CAD $25,000/month in Meta ad spend. Sustained lead generation performance for 18+ months. Built scalable AI-UGC production systems for rapid creative testing. Reduced creative fatigue through continuous iteration and behavioral messaging optimization. Successfully led cross-functional teams while serving as the primary client-facing strategist.", skills: ["Meta Ads", "Meta Pixel", "Meta Conversions API", "GA4", "Google Tag Manager", "Captions.ai", "Meta Ads Library", "TikTok Ad Intelligence Tools", "AI-UGC Production Framework", "Funnel Analytics"] },
-    { id: 3, category: "E-Commerce & Retail", niche: "General Merchandise", title: "The 5X ROAS Product Scaling Engine (Meta Ads)", budget: "€47,000/month", logo: "assets/logos/clients/Lovandi-logo.png", dashboard: "assets/dashboards/FL-Lovandi-analytics.png", brief: "I managed the end-to-end product testing and scaling operation for a multi-market e-commerce brand selling across several European regions. The objective were: product listing, product sales and run facebook ads, to rapidly identify winning products, launch them efficiently, and scale profitable offers while maintaining a high testing velocity.", execution: "I owned the entire growth lifecycle—from product hunting and competitor intelligence to product page creation, ad copywriting, creative adaptation, catalog management, localization, campaign deployment, optimization, and reporting. Leveraging behavioral psychology principles, I crafted conversion-focused messaging designed to trigger buyer intent and reduce purchase friction. I also managed the testing pipeline, evaluating 22–28 products weekly and scaling winners through Meta Ads using a structured performance framework.", outcome: "Managed €47,000/month in advertising spend. Tested 22–28 products weekly to identify scalable winners. Led full-funnel execution across multiple European markets. Built localized product launch systems for multilingual audiences. Achieved up to 5X ROAS on winning product campaigns.", skills: ["Meta Ads", "Shopify", "Product Research Tools", "Competitor Intelligence Platforms", "Ad Spy Tools", "CJ Dropshipping", "Alibaba", "Amazon Marketplace Research", "Review Management Apps", "CapCut"] },
-    { id: 4, category: "E-Commerce & Retail", niche: "Fashion & Apparel", title: "The Pinterest Fashion Scaling Framework (Pinterest Ads)", budget: "DKK 18,500 /month", logo: "assets/logos/clients/Zemova-logo.png", dashboard: "assets/dashboards/FL-Zemova-analytics.png", brief: "I managed growth initiatives for a fashion-focused e-commerce brand targeting female consumers across Scandinavian markets. The objective was to continuously identify winning products, build localized storefront experiences, and drive profitable sales through Pinterest's visual discovery ecosystem.", execution: "I owned the complete product commercialization process, including product sourcing research, competitor analysis, landing page creation, catalog management, localization, creative production, campaign launches, optimization, and reporting. Using behavioral psychology principles, I developed conversion-focused product narratives and visual creatives designed to capture attention during the inspiration and discovery stages of the customer journey. I also managed a structured testing framework that evaluated 17–20 fashion and beauty products weekly before scaling winning offers.", outcome: "Managed Pinterest Ads campaigns across multiple Scandinavian markets. Tested 17–20 products weekly to identify scalable winners. Built localized product pages and multilingual launch workflows. Managed full-funnel operations from product research to campaign scaling. Achieved 2.5X–3X ROAS on winning product campaigns.", skills: ["Pinterest Ads", "Shopify", "Product Research Tools", "Competitor Intelligence Platforms", "Ad Spy Tools", "CJ Dropshipping", "Review Management Apps", "CapCut", "Creative Testing Frameworks", "Product Catalog Management"] },
-    { id: 5, category: "Education & Training", niche: "Online Martial Arts Courses", title: "The Global Martial Arts Content & Revenue Engine", budget: "GBP 500/day (Meta Ads)", logo: "assets/logos/clients/RoyDean-logo.png", dashboard: "assets/dashboards/FL-RoyDean-analytics.png", brief: "I managed the digital presence of a globally recognized martial arts educator and multi-discipline black belt instructor. The challenge was to maintain a consistent content ecosystem across multiple platforms, grow audience engagement, promote international seminars, and drive revenue from premium digital training products.", execution: "I led the end-to-end social media operation across Facebook, Instagram, TikTok, and YouTube for both the instructor's personal brand and training business. I developed content pillar frameworks, coordinated with creative teams on video editing and thumbnails, managed publishing schedules across international time zones, maintained content databases, optimized discoverability through strategic hashtag research, and supported seminar promotion campaigns. Using audience psychology and skill-progression-based messaging, I helped position instructional products around the aspirations and learning journeys of martial artists at different belt levels while running Meta Ads to drive digital product sales and event awareness.", outcome: "Managed multi-platform content operations for a globally recognized martial arts educator. Maintained highly structured publishing schedules across multiple brand entities. Supported the promotion of international seminars and training events. Drove ongoing sales of digital instructional products through Meta Ads. Built scalable content systems around belt progression, training education, competition highlights, and skill development.", skills: ["Meta Ads", "Facebook", "Instagram", "TikTok", "YouTube", "Content Calendar Management", "Hashtag Research", "Video Production Coordination", "Community Growth Strategy", "Digital Product Marketing"] },
-    { id: 6, category: "Education & Training", niche: "Martial Arts Training Academy", title: "The 10X ROAS Student Enrollment Funnel", budget: "IDR 3,000,000/month", logo: "assets/logos/clients/Yuri-logo.png", dashboard: "assets/dashboards/FL-Yuri-analytics.png", brief: "I was brought in to help a leading martial arts academy increase student enrollments and create a predictable acquisition system. The challenge was to convert local interest into academy visits while showcasing the academy's credibility, coaching expertise, and proven training methodology.", execution: "I designed and managed a full-funnel student acquisition strategy spanning landing pages, WhatsApp lead generation, Meta Ads, and retargeting campaigns. Leveraging behavioral psychology principles, I crafted messaging focused on self-defense, skill development, confidence building, and instructor authority. I continuously tested creatives, ad copy variations, landing page experiences, and WhatsApp conversion flows to maximize inquiry-to-enrollment rates while promoting both evergreen and seasonal enrollment campaigns.", outcome: "Built a complete student acquisition funnel from awareness to enrollment. Managed ongoing Meta Ads and WhatsApp lead generation campaigns. Increased academy footfall through highly targeted local acquisition campaigns. Optimized multiple landing page and creative variations. Achieved approximately 10X ROAS from student enrollment campaigns.", skills: ["Meta Ads", "WhatsApp Marketing", "Landing Page Optimization", "Conversion Copywriting", "Creative Testing", "Audience Targeting", "Retargeting Campaigns", "Funnel Analytics", "Competitor Research Tools", "Lead Nurturing Systems"] },
-    { id: 7, category: "Health, Wellness & Fitness", niche: "Fitness Education & Coaching", title: "The Science-Backed Fitness Lead Engine", budget: "USD $100/month", logo: "assets/logos/clients/FasterWorkouts-logo.png", dashboard: "assets/dashboards/FL-FasterWorkouts-analytics.png", brief: "I was tasked with generating qualified leads for a research-backed fitness coaching program focused on helping busy individuals achieve meaningful fitness outcomes through short, highly efficient workout routines. The challenge was communicating a non-traditional fitness philosophy and converting interest into actionable leads at a modest advertising budget.", execution: "I developed and managed Meta lead generation campaigns focused on the program's unique value proposition: achieving measurable fitness improvements in just minutes per day. Using behavioral psychology principles, I crafted messaging around convenience, habit formation, time scarcity, and sustainable health improvement. I continuously tested creatives, ad copy, and instant lead forms while integrating GA4 and GTM tracking to improve lead quality and optimize campaign performance.", outcome: "Built a lead generation funnel for a science-backed fitness education program. Optimized Meta instant form campaigns to maximize lead capture. Leveraged behavioral messaging to improve engagement and conversion rates. Implemented tracking infrastructure for data-driven optimization. Achieved approximately 2X ROAS from lead generation campaigns.", skills: ["Meta Ads", "Meta Instant Forms", "Google Analytics 4", "Google Tag Manager", "WhatsApp Follow-Up Workflows", "Conversion Copywriting", "Creative Testing", "Audience Targeting", "Funnel Analytics", "Lead Generation Optimization"] },
-    { id: 8, category: "Health, Wellness & Fitness", niche: "Surfing Lessons & Water Sports Training", title: "The Coastal Adventure Enrollment Funnel", budget: "USD $100/month", logo: "assets/logos/clients/SanDiegoSurfSchool-logo.png", dashboard: "assets/dashboards/FL-SanDiegoSurfSchool-analytics.png", brief: "I was tasked with increasing student bookings for a surf training business operating in a highly competitive recreational sports market. The challenge was attracting both beginners and adventure-seeking customers while converting interest into paid lesson bookings on a limited advertising budget.", execution: "I built and managed a Meta Ads lead generation system focused on experience-driven marketing. Using behavioral psychology principles, I positioned surfing as a combination of adventure, skill development, confidence building, and lifestyle transformation. I developed audience-specific messaging for beginners, tourists, families, and recreational athletes while continuously testing creatives, offers, and lead-generation funnels. Tracking infrastructure through GA4 and GTM enabled ongoing optimization and data-driven budget allocation.", outcome: "Built a student acquisition funnel for surfing lessons and training programs. Generated qualified inquiries for private, group, and beginner surf lessons. Optimized Meta Ads campaigns through continuous creative and audience testing. Implemented tracking systems to improve campaign decision-making. Achieved approximately 2X ROAS from enrollment campaigns.", skills: ["Meta Ads", "Google Analytics 4", "Google Tag Manager", "Meta Lead Forms", "Audience Segmentation", "Conversion Copywriting", "Creative Testing", "Funnel Analytics", "Retargeting Campaigns", "WhatsApp Lead Management"] },
-    { id: 9, category: "E-Commerce & Retail", niche: "Fashion & Apparel Retail", title: "The Retail Footfall & E-Commerce Growth Engine", budget: "PKR 50,000/month", logo: "assets/logos/clients/MuzammilCenter-logo.png", dashboard: "assets/dashboards/TG-MuzammilCenter-analytics.png", brief: "I was tasked with growing both in-store customer traffic and online sales for a multi-category fashion and lifestyle retailer. The challenge was building brand awareness locally while simultaneously scaling revenue through the Shopify storefront.", execution: "I managed the complete digital growth ecosystem, including product page creation, inventory management, conversion-focused copywriting, creative optimization, and Meta Ads campaign management. Using competitor intelligence and consumer behavior analysis, I positioned the brand as a trusted destination for everyday fashion and lifestyle shopping. I developed separate campaign structures for awareness and purchase objectives while continuously optimizing product presentation, audience targeting, and conversion pathways.", outcome: "Managed dual growth objectives across retail footfall and e-commerce sales. Built and optimized product pages to improve purchase conversion rates. Increased online purchases by approximately 13X compared to previous performance. Generated an estimated 5X–8X ROAS through Meta advertising campaigns. Strengthened brand visibility and customer acquisition through targeted awareness campaigns.", skills: ["Meta Ads", "Shopify", "Google Analytics 4", "Google Tag Manager", "WhatsApp Marketing", "Conversion Copywriting", "Inventory Management", "Competitor Research", "Creative Optimization", "Audience Targeting"] },
+    { id: 1, category: "BFSI (Banking, Financial Services & Insurance)", niche: "Mortgage", title: "The $1M+ Mortgage Lead Generation Scaling (Google Ads)", budget: "CAD $45,000/month", logo: "assets/logos/clients/NuBorrow-logo.png", dashboard: "assets/dashboards/FL-NuBorrow-analytics.png", brief: "I took over a mortgage and lending account where lead costs had climbed to CAD $700–800 per lead across mortgage, HELOC, HEL, and low Down Payment campaigns. The objective was to improve efficiency without compromising lead volume.", execution: "I rebuilt the optimization framework using structured Google Ads audits, search term analysis, negative keyword expansion, audience refinement, bid optimization, quality score improvements, landing page reviews, and enhanced tracking through GA4 and GTM. I also leveraged behavioral intent signals to prioritize high-converting search traffic and reduce acquisition friction.", outcome: "Reduced CPL from CAD $700–800 to CAD $130–180. Lowered acquisition costs by more than 75%. Optimized multiple lending product campaigns simultaneously. Improved performance across a CAD $45,000/month media budget.", skills: ["Google Ads", "Google Analytics 4", "Google Tag Manager", "Google Keyword Planner", "Search Term Audits", "Negative Keywords", "Audience Targeting", "Bid Optimization", "Conversion Tracking", "Landing Page Analysis"] },
+    { id: 2, category: "BFSI (Banking, Financial Services & Insurance)", niche: "Mortgage", title: "6-Figure DTC Financial Services Niche Lead Generation (Meta Ads)", budget: "CAD $25,000/month", logo: "assets/logos/clients/RatesWise-logo.png", dashboard: "assets/dashboards/FL-RatesWise-analytics.png", brief: "I managed Meta Ads for a direct-to-consumer financial services brand operating in a highly competitive and compliance-heavy market. The challenge was maintaining consistent lead flow while continuously refreshing creatives to combat audience fatigue and rising acquisition costs.", execution: "I led the account for over 1.5 years, overseeing strategy, creative direction, client communication, and campaign optimization. I pioneered AI-generated UGC workflows to rapidly test new messaging angles, behavioral triggers, and creative concepts while reducing production bottlenecks. Using GA-4 insights, Meta Pixel, CAPI, competitor intelligence, and funnel analysis, I continuously refined audience targeting and creative performance across the entire customer journey.", outcome: "Managed CAD $25,000/month in Meta ad spend. Sustained lead generation performance for 18+ months. Built scalable AI-UGC production systems for rapid creative testing. Reduced creative fatigue through continuous iteration and behavioral messaging optimization. Successfully led cross-functional teams while serving as the primary client-facing strategist.", skills: ["Meta Ads", "Meta Pixel", "Meta Conversions API", "GA4", "Google Tag Manager", "Captions.ai", "Meta Ads Library", "TikTok Ad Intelligence Tools", "AI-UGC Production Framework", "Funnel Analytics"] },
+    { id: 3, category: "E-Commerce & Retail", niche: "General Merchandise", title: "The Dropshipping Store Scaling Engine (Meta Ads)", budget: "€47,000/month", logo: "assets/logos/clients/Lovandi-logo.png", dashboard: "assets/dashboards/FL-Lovandi-analytics.png", brief: "I managed the end-to-end product testing and scaling operation for a multi-market e-commerce brand selling across several European regions. The objective were: product listing, product sales and run facebook ads, to rapidly identify winning products, launch them efficiently, and scale profitable offers while maintaining a high testing velocity.", execution: "I owned the entire growth lifecycle—from product hunting and competitor intelligence to product page creation, ad copywriting, creative adaptation, catalog management, localization, campaign deployment, optimization, and reporting. Leveraging behavioral psychology principles, I crafted conversion-focused messaging designed to trigger buyer intent and reduce purchase friction. I also managed the testing pipeline, evaluating 22–28 products weekly and scaling winners through Meta Ads using a structured performance framework.", outcome: "Managed €47,000/month in advertising spend. Tested 22–28 products weekly to identify scalable winners. Led full-funnel execution across multiple European markets. Built localized product launch systems for multilingual audiences. Achieved up to 5X ROAS on winning product campaigns.", skills: ["Meta Ads", "Shopify", "Product Research Tools", "Competitor Intelligence Platforms", "Ad Spy Tools", "CJ Dropshipping", "Alibaba", "Amazon Marketplace Research", "Review Management Apps", "CapCut"] },
+    { id: 4, category: "E-Commerce & Retail", niche: "Fashion & Apparel", title: "The Fashion Store Scaling Framework (Pinterest Ads)", budget: "€500/month", logo: "assets/logos/clients/Zemova-logo.png", dashboard: "assets/dashboards/FL-Zemova-analytics.png", brief: "I managed growth initiatives for a fashion-focused e-commerce brand targeting female consumers across Scandinavian markets. The objective was to continuously identify winning products, build localized storefront experiences, and drive profitable sales through Pinterest's visual discovery ecosystem.", execution: "I owned the complete product commercialization process, including product sourcing research, competitor analysis, landing page creation, catalog management, localization, creative production, campaign launches, optimization, and reporting. Using behavioral psychology principles, I developed conversion-focused product narratives and visual creatives designed to capture attention during the inspiration and discovery stages of the customer journey. I also managed a structured testing framework that evaluated 17–20 fashion and beauty products weekly before scaling winning offers.", outcome: "Managed Pinterest Ads campaigns across multiple Scandinavian markets. Tested 17–20 products weekly to identify scalable winners. Built localized product pages and multilingual launch workflows. Managed full-funnel operations from product research to campaign scaling. Achieved 2.5X–3X ROAS on winning product campaigns.", skills: ["Pinterest Ads", "Shopify", "Product Research Tools", "Competitor Intelligence Platforms", "Ad Spy Tools", "CJ Dropshipping", "Review Management Apps", "CapCut", "Creative Testing Frameworks", "Product Catalog Management"] },
+    { id: 5, category: "Education & Training", niche: "Online Martial Arts Courses & Digital Products", title: "The Global Martial Arts Content & Revenue Engine (Meta & Google Ads)", budget: "£ 500/day", logo: "assets/logos/clients/RoyDean-logo.png", dashboard: "assets/dashboards/FL-RoyDean-analytics.png", brief: "I managed the digital presence of a globally recognized martial arts educator and multi-discipline black belt instructor. The challenge was to maintain a consistent content ecosystem across multiple platforms, grow audience engagement, promote international seminars, and drive revenue from premium digital training products.", execution: "I led the end-to-end social media operation across Facebook, Instagram, TikTok, and YouTube for both the instructor's personal brand and training business. I developed content pillar frameworks, coordinated with creative teams on video editing and thumbnails, managed publishing schedules across international time zones, maintained content databases, optimized discoverability through strategic hashtag research, and supported seminar promotion campaigns. Using audience psychology and skill-progression-based messaging, I helped position instructional products around the aspirations and learning journeys of martial artists at different belt levels while running Meta Ads to drive digital product sales and event awareness.", outcome: "Managed multi-platform content operations for a globally recognized martial arts educator. Maintained highly structured publishing schedules across multiple brand entities. Supported the promotion of international seminars and training events. Drove ongoing sales of digital instructional products through Meta Ads. Built scalable content systems around belt progression, training education, competition highlights, and skill development.", skills: ["Meta Ads", "Facebook", "Instagram", "TikTok", "YouTube", "Content Calendar Management", "Hashtag Research", "Video Production Coordination", "Community Growth Strategy", "Digital Product Marketing"] },
+    { id: 6, category: "Education & Training", niche: "Martial Arts Training Academy", title: "The 10X ROAS Martial Arts Student Enrollment Funnel (Meta Ads)", budget: "IDR 3 Million/month", logo: "assets/logos/clients/Yuri-logo.png", dashboard: "assets/dashboards/FL-Yuri-analytics.png", brief: "I was brought in to help a leading martial arts academy increase student enrollments and create a predictable acquisition system. The challenge was to convert local interest into academy visits while showcasing the academy's credibility, coaching expertise, and proven training methodology.", execution: "I designed and managed a full-funnel student acquisition strategy spanning landing pages, WhatsApp lead generation, Meta Ads, and retargeting campaigns. Leveraging behavioral psychology principles, I crafted messaging focused on self-defense, skill development, confidence building, and instructor authority. I continuously tested creatives, ad copy variations, landing page experiences, and WhatsApp conversion flows to maximize inquiry-to-enrollment rates while promoting both evergreen and seasonal enrollment campaigns.", outcome: "Built a complete student acquisition funnel from awareness to enrollment. Managed ongoing Meta Ads and WhatsApp lead generation campaigns. Increased academy footfall through highly targeted local acquisition campaigns. Optimized multiple landing page and creative variations. Achieved approximately 10X ROAS from student enrollment campaigns.", skills: ["Meta Ads", "WhatsApp Marketing", "Landing Page Optimization", "Conversion Copywriting", "Creative Testing", "Audience Targeting", "Retargeting Campaigns", "Funnel Analytics", "Competitor Research Tools", "Lead Nurturing Systems"] },
+    { id: 7, category: "Health, Wellness & Fitness", niche: "Fitness Education & Coaching", title: "The Science-Backed Fitness Lead Engine (Meta Ads)", budget: "USD $500/month", logo: "assets/logos/clients/FasterWorkouts-logo.png", dashboard: "assets/dashboards/FL-FasterWorkouts-analytics.png", brief: "I was tasked with generating qualified leads for a research-backed fitness coaching program focused on helping busy individuals achieve meaningful fitness outcomes through short, highly efficient workout routines. The challenge was communicating a non-traditional fitness philosophy and converting interest into actionable leads at a modest advertising budget.", execution: "I developed and managed Meta lead generation campaigns focused on the program's unique value proposition: achieving measurable fitness improvements in just minutes per day. Using behavioral psychology principles, I crafted messaging around convenience, habit formation, time scarcity, and sustainable health improvement. I continuously tested creatives, ad copy, and instant lead forms while integrating GA4 and GTM tracking to improve lead quality and optimize campaign performance.", outcome: "Built a lead generation funnel for a science-backed fitness education program. Optimized Meta instant form campaigns to maximize lead capture. Leveraged behavioral messaging to improve engagement and conversion rates. Implemented tracking infrastructure for data-driven optimization. Achieved approximately 2X ROAS from lead generation campaigns.", skills: ["Meta Ads", "Meta Instant Forms", "Google Analytics 4", "Google Tag Manager", "WhatsApp Follow-Up Workflows", "Conversion Copywriting", "Creative Testing", "Audience Targeting", "Funnel Analytics", "Lead Generation Optimization"] },
+    { id: 8, category: "Education & Training", niche: "Surfing Lessons & Water Sports Training", title: "The Surfing Adventure Classes Enrollment Funnel (Meta Ads)",  budget: "USD $100/month", logo: "assets/logos/clients/SanDiegoSurfSchool-logo.png", dashboard: "assets/dashboards/FL-SanDiegoSurfSchool-analytics.png", brief: "I was tasked with increasing student bookings for a surf training business operating in a highly competitive recreational sports market. The challenge was attracting both beginners and adventure-seeking customers while converting interest into paid lesson bookings on a limited advertising budget.", execution: "I built and managed a Meta Ads lead generation system focused on experience-driven marketing. Using behavioral psychology principles, I positioned surfing as a combination of adventure, skill development, confidence building, and lifestyle transformation. I developed audience-specific messaging for beginners, tourists, families, and recreational athletes while continuously testing creatives, offers, and lead-generation funnels. Tracking infrastructure through GA4 and GTM enabled ongoing optimization and data-driven budget allocation.", outcome: "Built a student acquisition funnel for surfing lessons and training programs. Generated qualified inquiries for private, group, and beginner surf lessons. Optimized Meta Ads campaigns through continuous creative and audience testing. Implemented tracking systems to improve campaign decision-making. Achieved approximately 2X ROAS from enrollment campaigns.", skills: ["Meta Ads", "Google Analytics 4", "Google Tag Manager", "Meta Lead Forms", "Audience Segmentation", "Conversion Copywriting", "Creative Testing", "Funnel Analytics", "Retargeting Campaigns", "WhatsApp Lead Management"] },
+    { id: 9, category: "E-Commerce & Retail", niche: "Fashion & Apparel Retail", title: "The Retail Footfall & E-Commerce Growth Engine (Meta Ads)", budget: "PKR 50,000/month", logo: "assets/logos/clients/MuzammilCenter-logo.png", dashboard: "assets/dashboards/TG-MuzammilCenter-analytics.png", brief: "I was tasked with growing both in-store customer traffic and online sales for a multi-category fashion and lifestyle retailer. The challenge was building brand awareness locally while simultaneously scaling revenue through the Shopify storefront.", execution: "I managed the complete digital growth ecosystem, including product page creation, inventory management, conversion-focused copywriting, creative optimization, and Meta Ads campaign management. Using competitor intelligence and consumer behavior analysis, I positioned the brand as a trusted destination for everyday fashion and lifestyle shopping. I developed separate campaign structures for awareness and purchase objectives while continuously optimizing product presentation, audience targeting, and conversion pathways.", outcome: "Managed dual growth objectives across retail footfall and e-commerce sales. Built and optimized product pages to improve purchase conversion rates. Increased online purchases by approximately 13X compared to previous performance. Generated an estimated 5X–8X ROAS through Meta advertising campaigns. Strengthened brand visibility and customer acquisition through targeted awareness campaigns.", skills: ["Meta Ads", "Shopify", "Google Analytics 4", "Google Tag Manager", "WhatsApp Marketing", "Conversion Copywriting", "Inventory Management", "Competitor Research", "Creative Optimization", "Audience Targeting"] },
     { id: 10, category: "Education & Training", niche: "Academic Coaching & IELTS Preparation", title: "The Multi-Platform Student Acquisition Ecosystem", budget: "PKR 4,000/month", logo: "assets/logos/clients/AccessAcademy-logo.png", dashboard: "assets/dashboards/TG-AccessAcademy-analytics.png", brief: "I was engaged to strengthen the digital presence of an educational institution offering academic tutoring, language proficiency preparation, and career-focused technical training. The challenge was building a consistent brand presence across multiple platforms while supporting student acquisition through both organic and paid channels.", execution: "I developed and managed the institution's content marketing ecosystem across Facebook, Instagram, TikTok, LinkedIn, and X. I established content pillars, coordinated content production, managed publishing schedules, monitored audience engagement, conducted competitor research, and handled community management through comments and direct messages. Beyond social media, I also led website planning, content creation, UX reviews, quality assurance testing, and cross-functional collaboration with developers and designers to create a cohesive digital experience for prospective students.", outcome: "Managed multi-platform social media operations across five major channels. Developed structured content pillars aligned with educational and career-focused audiences. Built and optimized the institution's website experience. Supported student acquisition initiatives through organic content and Meta advertising. Established scalable reporting, content planning, and audience engagement workflows.", skills: ["Meta Ads", "Facebook", "Instagram", "TikTok", "LinkedIn", "X (Twitter)", "Content Strategy", "Community Management", "Website Content Development", "Competitor Research"] },
-    { id: 11, category: "Education & Training", niche: "Study Abroad Consulting & IELTS Preparation", title: "The Education Brand Authority System", budget: "AED 1,000/month", logo: "assets/logos/clients/FABConsultants-logo.png", dashboard: "assets/dashboards/TG-FABConsultants-analytics.png", brief: "I was brought in to strengthen the digital presence of an education consultancy offering study-abroad guidance, IELTS preparation, visa assistance, and international admissions support. The objective was to build brand credibility, maintain consistent communication with prospective students, and create a unified digital experience across all customer touchpoints.", execution: "I managed the brand's content ecosystem across Facebook, Instagram, TikTok, LinkedIn, and X. I developed content pillars, wrote educational and promotional content, coordinated publishing schedules, managed audience interactions, and conducted competitor research. Beyond social media, I led website content development, collaborated with designers and developers, tested website functionality, managed client communications, and ensured smooth cross-functional execution of marketing initiatives.", outcome: "Managed multi-platform content and community engagement. Developed content frameworks focused on education, admissions, and career growth. Coordinated cross-functional teams including designers, developers, and stakeholders. Contributed to website planning, content creation, testing, and launch activities. Established structured reporting and communication workflows for ongoing growth initiatives.", skills: ["Meta Ads", "Facebook", "Instagram", "TikTok", "LinkedIn", "X (Twitter)", "Content Strategy", "Website Content Development", "Community Management", "Cross-Functional Project Coordination"] },
-    { id: 12, category: "Human Resources & Recruitment", niche: "International Recruitment & Overseas Employment", title: "The Recruitment Brand Visibility Framework", budget: "USD $800/month", logo: "assets/logos/clients/OSCAL-logo.png", dashboard: "assets/dashboards/TC-OSCAL-analytics.png", brief: "I was responsible for strengthening the digital presence of an international recruitment agency connecting skilled professionals with overseas employment opportunities. The objective was to establish credibility, communicate opportunities clearly, and maintain consistent engagement across multiple social media channels.", execution: "I managed content strategy and social media operations across Facebook, Instagram, LinkedIn, X, and TikTok. My responsibilities included defining content pillars, writing content, scheduling posts, conducting competitor research, managing community engagement, and coordinating platform-specific distribution. Beyond social media, I contributed to website content development, collaborated with designers and developers, performed functionality testing, managed client communications, and coordinated project execution through structured reporting and stakeholder alignment.", outcome: "Managed multi-platform content and brand communications. Developed content frameworks focused on career opportunities, employer branding, and recruitment awareness. Coordinated cross-functional teams including designers, developers, and stakeholders. Contributed to website planning, content creation, testing, and launch support. Established streamlined communication and reporting workflows for ongoing digital operations.", skills: ["LinkedIn", "Facebook", "Instagram", "TikTok", "X (Twitter)", "Content Strategy", "Community Management", "Website Content Development", "Competitor Research", "Cross-Functional Project Coordination"] },
-    { id: 13, category: "Business Services & Professional Networking", niche: "Business Networking, Investment Facilitation & Trade Promotion", title: "The Investor Community Growth Framework", budget: "PKR 2,000/day", logo: "assets/logos/clients/PakistanInvestorsForumEPCA-logo.png", dashboard: "assets/dashboards/TC-PakistanInvestorsForumEPCA-analytics.png", brief: "I was tasked with building the digital presence of an investor-focused business networking organization from the ground up. The objective was to establish credibility, grow the investor community, and create consistent engagement among professionals, business owners, and investment stakeholders.", execution: "I developed the organization's content strategy, defined content pillars, managed social media operations across Facebook, Instagram, LinkedIn, and X, and launched Meta advertising campaigns to expand audience reach. I collaborated with stakeholders and creative teams to produce content aligned with the organization's mission while managing publishing schedules, community engagement, reporting, and campaign optimization. My focus was on positioning the platform as a trusted hub for networking, investment discussions, and business growth opportunities.", outcome: "Built the organization's digital presence from the ground up. Developed content frameworks focused on investment, entrepreneurship, and business networking. Managed multi-platform social media operations and audience engagement. Executed Meta Ads campaigns to support community growth objectives. Established scalable content, reporting, and stakeholder communication processes.", skills: ["Meta Ads", "Facebook", "Instagram", "LinkedIn", "X (Twitter)", "Content Strategy", "Community Management", "Audience Growth Campaigns", "Stakeholder Communication", "Performance Reporting"] },
-    { id: 14, category: "Business Services & Professional Networking", niche: "Executive Networking, Business Leadership & Professional Communities", title: "The Executive Community Growth Platform", budget: "USD $20/day", logo: "assets/logos/clients/PakistaniExecutiveForum-logo.png", dashboard: "assets/dashboards/TC-PakistaniExecutiveForum-analytics.png", brief: "I was engaged to support the growth of a professional networking organization focused on connecting executives, business leaders, and industry stakeholders. The objective was to strengthen the organization's digital presence, increase community engagement, and amplify visibility around its networking initiatives, leadership events, and annual gatherings.", execution: "I managed content strategy, social media operations, and Meta advertising campaigns across Facebook, Instagram, LinkedIn, and X. I developed content pillars aligned with leadership, business networking, and professional development themes while coordinating closely with clients and designers to ensure consistent brand communication. I also supported the digital promotion and social media coverage of annual meetups, executive networking sessions, delegation visits, and recognition ceremonies.", outcome: "Managed multi-platform social media and community engagement initiatives. Developed content frameworks focused on leadership, networking, and professional growth. Executed Meta Ads campaigns to support audience and community expansion. Coordinated digital coverage for executive events, networking forums, and award ceremonies. Established streamlined communication workflows between stakeholders, designers, and management teams.", skills: ["Meta Ads", "Facebook", "Instagram", "LinkedIn", "X (Twitter)", "Content Strategy", "Event Promotion", "Community Management", "Stakeholder Communication", "Performance Reporting"] },
-    { id: 15, category: "Hospitality & Entertainment", niche: "Nightlife, Dance Club & Live Entertainment", title: "The 20X ROAS Nightlife Growth Engine", budget: "AED 500/day", logo: "assets/logos/clients/RedSquare-logo.png", dashboard: "assets/dashboards/KBM-RedSquare-analytics.png", brief: "I was tasked with increasing venue footfall and strengthening the digital presence of a premium nightlife and entertainment brand. The objective was to attract high-intent audiences, boost event attendance, and build a stronger social media following through a combination of paid and organic strategies.", execution: "I managed Meta advertising campaigns alongside the club's social media presence across Instagram, Facebook, and TikTok. Using audience segmentation and behavioral targeting, I developed campaigns focused on nightlife enthusiasts, event-goers, and entertainment seekers. I also coordinated with content creators and designers on content shoots, refined creative assets, managed publishing schedules, and implemented organic growth strategies designed to maximize engagement and audience retention.", outcome: "Achieved approximately 20X ROAS from footfall-focused Meta Ads campaigns. Increased organic Instagram audience growth by approximately 4X compared to previous performance. Managed paid and organic growth strategies simultaneously. Coordinated content production, creative execution, and campaign deployment. Strengthened brand visibility and event attendance through targeted audience acquisition.", skills: ["Meta Ads", "Facebook", "Instagram", "TikTok", "Audience Segmentation", "Event Promotion Campaigns", "Content Strategy", "Creative Production Coordination", "Community Management", "Performance Reporting"] },
-    { id: 16, category: "E-Commerce & Retail", niche: "Supermarket & Grocery Retail", title: "The 30X ROAS Retail Footfall Accelerator", budget: "AED 600/day", logo: "assets/logos/clients/DreamNight-logo.png", dashboard: "assets/dashboards/KBM-DreamNight-analytics.png", brief: "I was brought in to increase customer footfall for a large retail supermarket while strengthening local brand awareness. The objective was to attract high-intent shoppers through a combination of paid advertising, influencer partnerships, and platform-specific content strategies.", execution: "I managed Meta Ads and TikTok advertising campaigns focused on driving store visits and purchase intent. I identified and coordinated with relevant influencers, developed campaign messaging, optimized audience targeting, and aligned promotional content with consumer shopping behaviors. By combining paid media with creator-led marketing, I built a multi-channel customer acquisition strategy designed to maximize in-store traffic.", outcome: "Achieved approximately 30X ROAS from footfall-focused campaigns. Successfully integrated influencer marketing with paid advertising initiatives. Managed customer acquisition campaigns across Meta and TikTok. Increased local brand visibility through strategic creator partnerships. Built a scalable framework for retail traffic generation.", skills: ["Meta Ads", "TikTok Ads", "Influencer Marketing", "Audience Targeting", "Retail Footfall Campaigns", "Content Strategy", "Creator Outreach", "Campaign Optimization", "Consumer Behavior Analysis", "Performance Reporting"] },
-    { id: 17, category: "Real Estate", niche: "Real Estate Brokerage & Property Consulting", title: "The Multi-Channel Property Lead Generation System", budget: "AED 1,000/day", logo: "assets/logos/clients/RoyalLinkProperties-logo.png", dashboard: "assets/dashboards/KBM-RoyalLinkProperties-analytics.png", brief: "I was tasked with generating qualified property inquiries for a real estate brokerage while strengthening its digital presence across multiple channels. The objective was to attract serious buyers and investors through a combination of paid advertising, content marketing, and consistent brand communication.", execution: "I managed lead generation campaigns across Meta and Google Ads while overseeing content distribution on Instagram, Facebook, TikTok, and YouTube. I developed ad messaging, wrote scripts for AI-generated property videos, collaborated with content production teams on shoots, refined creative assets, and coordinated campaign launches. Leveraging buyer psychology and intent-based targeting, I structured campaigns around property discovery, investment opportunities, and lead conversion.", outcome: "Managed multi-channel lead generation campaigns across Meta and Google. Generated qualified property inquiries across multiple real estate developments. Developed AI-assisted video advertising concepts and scripts. Coordinated content production and creative execution workflows. Built an integrated acquisition framework spanning paid media and organic content.", skills: ["Meta Ads", "Google Ads", "Facebook", "Instagram", "TikTok", "YouTube", "AI Video Scriptwriting", "Lead Generation Funnels", "Content Production Coordination", "Audience Targeting"] },
-    { id: 18, category: "Construction & Real Estate Development", niche: "Villa Construction, Landscaping & Pool Contracting", title: "The 5X ROAS Contractor Lead Generation Engine", budget: "AED 200/day", logo: "assets/logos/clients/AspiresSky-logo.png", dashboard: "assets/dashboards/KBM-AspiresSky-analytics.png", brief: "I was engaged to build a complete lead generation system for a construction and contracting business specializing in villa construction, swimming pools, landscaping, garden development, and maintenance services. The objective was to generate high-quality inbound leads while establishing a reliable tracking and attribution framework from the ground up.", execution: "I built the entire Google Ads infrastructure from scratch, including campaign architecture, conversion tracking, audience segmentation, and performance measurement systems. I implemented Google Tag Manager and GA4 tracking to ensure accurate lead attribution and data collection. Using intent-based keyword targeting, audience signals, and conversion-focused ad messaging, I optimized campaigns to attract homeowners and property developers actively seeking construction and landscaping services. I also managed account verification, tracking quality assurance, and ongoing performance optimization.", outcome: "Built the Google Ads ecosystem from the ground up. Implemented enterprise-grade GTM and GA4 tracking infrastructure. Created custom audience frameworks to improve targeting precision. Generated high-quality inbound leads for multiple contracting services. Achieved approximately 5X ROAS through Google Ads lead generation campaigns.", skills: ["Google Ads", "Google Analytics 4", "Google Tag Manager", "Conversion Tracking", "Audience Segmentation", "Keyword Research", "Lead Generation Funnels", "Landing Page Optimization", "Attribution Modeling", "Performance Reporting"] },
-    { id: 19, category: "Accounting & Financial Services", niche: "Tax Consulting & VAT Management", title: "The Professional Services Lead Acquisition Framework", budget: "USD $30/day", logo: "assets/logos/clients/CapitalLinksInternational-logo.png", dashboard: "assets/dashboards/KBM-CapitalLinksInternational-analytics.png", brief: "I was tasked with generating qualified leads for a financial consulting firm offering tax filing, VAT management, accounting, and bookkeeping services. The challenge was attracting business owners and decision-makers in a highly trust-driven industry where credibility and expertise heavily influence conversion behavior.", execution: "I managed Meta Ads campaigns alongside the firm's social media presence on Facebook and Instagram. Using behavioral psychology principles, I developed messaging focused on compliance confidence, financial risk reduction, operational efficiency, and professional expertise. I structured audience targeting around business owners, entrepreneurs, and corporate decision-makers while continuously optimizing creatives, ad copy, and lead generation workflows to improve inquiry quality.", outcome: "Managed lead generation campaigns for accounting and tax advisory services. Built audience targeting frameworks focused on business decision-makers. Developed trust-driven messaging designed to reduce conversion friction. Supported brand visibility through consistent social media management. Generated qualified inquiries for taxation, bookkeeping, accounting, and VAT-related services.", skills: ["Meta Ads", "Facebook", "Instagram", "Lead Generation Campaigns", "Audience Targeting", "Conversion Copywriting", "Creative Testing", "Funnel Optimization", "Competitor Research", "Performance Reporting"] },
+    { id: 11, category: "Education & Training", niche: "Study Abroad Consulting & IELTS Preparation", title: "The Education Consultancy Lead Gen System (Meta Ads)", budget: "AED 1,000/month", logo: "assets/logos/clients/FABConsultants-logo.png", dashboard: "assets/dashboards/TG-FABConsultants-analytics.png", brief: "I was brought in to strengthen the digital presence of an education consultancy offering study-abroad guidance, IELTS preparation, visa assistance, and international admissions support. The objective was to build brand credibility, maintain consistent communication with prospective students, and create a unified digital experience across all customer touchpoints.", execution: "I managed the brand's content ecosystem across Facebook, Instagram, TikTok, LinkedIn, and X. I developed content pillars, wrote educational and promotional content, coordinated publishing schedules, managed audience interactions, and conducted competitor research. Beyond social media, I led website content development, collaborated with designers and developers, tested website functionality, managed client communications, and ensured smooth cross-functional execution of marketing initiatives.", outcome: "Managed multi-platform content and community engagement. Developed content frameworks focused on education, admissions, and career growth. Coordinated cross-functional teams including designers, developers, and stakeholders. Contributed to website planning, content creation, testing, and launch activities. Established structured reporting and communication workflows for ongoing growth initiatives.", skills: ["Meta Ads", "Facebook", "Instagram", "TikTok", "LinkedIn", "X (Twitter)", "Content Strategy", "Website Content Development", "Community Management", "Cross-Functional Project Coordination"] },
+    { id: 12, category: "Human Resources & Recruitment", niche: "International Recruitment & Overseas Employment", title: "The Recruitment Brand Visibility Framework (Google Ads)", budget: "USD $800/month", logo: "assets/logos/clients/OSCAL-logo.png", dashboard: "assets/dashboards/TC-OSCAL-analytics.png", brief: "I was responsible for strengthening the digital presence of an international recruitment agency connecting skilled professionals with overseas employment opportunities. The objective was to establish credibility, communicate opportunities clearly, and maintain consistent engagement across multiple social media channels.", execution: "I managed content strategy and social media operations across Facebook, Instagram, LinkedIn, X, and TikTok. My responsibilities included defining content pillars, writing content, scheduling posts, conducting competitor research, managing community engagement, and coordinating platform-specific distribution. Beyond social media, I contributed to website content development, collaborated with designers and developers, performed functionality testing, managed client communications, and coordinated project execution through structured reporting and stakeholder alignment.", outcome: "Managed multi-platform content and brand communications. Developed content frameworks focused on career opportunities, employer branding, and recruitment awareness. Coordinated cross-functional teams including designers, developers, and stakeholders. Contributed to website planning, content creation, testing, and launch support. Established streamlined communication and reporting workflows for ongoing digital operations.", skills: ["LinkedIn", "Facebook", "Instagram", "TikTok", "X (Twitter)", "Content Strategy", "Community Management", "Website Content Development", "Competitor Research", "Cross-Functional Project Coordination"] },
+    { id: 13, category: "Business & Professional Networking", niche: "Business Networking, Investment Facilitation & Trade Promotion", title: "The Investor Community Growth Framework", budget: "PKR 2,000/day", logo: "assets/logos/clients/PakistanInvestorsForumEPCA-logo.png", dashboard: "assets/dashboards/TC-PakistanInvestorsForumEPCA-analytics.png", brief: "I was tasked with building the digital presence of an investor-focused business networking organization from the ground up. The objective was to establish credibility, grow the investor community, and create consistent engagement among professionals, business owners, and investment stakeholders.", execution: "I developed the organization's content strategy, defined content pillars, managed social media operations across Facebook, Instagram, LinkedIn, and X, and launched Meta advertising campaigns to expand audience reach. I collaborated with stakeholders and creative teams to produce content aligned with the organization's mission while managing publishing schedules, community engagement, reporting, and campaign optimization. My focus was on positioning the platform as a trusted hub for networking, investment discussions, and business growth opportunities.", outcome: "Built the organization's digital presence from the ground up. Developed content frameworks focused on investment, entrepreneurship, and business networking. Managed multi-platform social media operations and audience engagement. Executed Meta Ads campaigns to support community growth objectives. Established scalable content, reporting, and stakeholder communication processes.", skills: ["Meta Ads", "Facebook", "Instagram", "LinkedIn", "X (Twitter)", "Content Strategy", "Community Management", "Audience Growth Campaigns", "Stakeholder Communication", "Performance Reporting"] },
+    { id: 14, category: "Business & Professional Networking", niche: "Executive Networking, Business Leadership & Professional Communities", title: "The Business Executive Community Growth Platform (Meta Ads)", budget: "USD $200/day", logo: "assets/logos/clients/PakistaniExecutiveForum-logo.png", dashboard: "assets/dashboards/TC-PakistaniExecutiveForum-analytics.png", brief: "I was engaged to support the growth of a professional networking organization focused on connecting executives, business leaders, and industry stakeholders. The objective was to strengthen the organization's digital presence, increase community engagement, and amplify visibility around its networking initiatives, leadership events, and annual gatherings.", execution: "I managed content strategy, social media operations, and Meta advertising campaigns across Facebook, Instagram, LinkedIn, and X. I developed content pillars aligned with leadership, business networking, and professional development themes while coordinating closely with clients and designers to ensure consistent brand communication. I also supported the digital promotion and social media coverage of annual meetups, executive networking sessions, delegation visits, and recognition ceremonies.", outcome: "Managed multi-platform social media and community engagement initiatives. Developed content frameworks focused on leadership, networking, and professional growth. Executed Meta Ads campaigns to support audience and community expansion. Coordinated digital coverage for executive events, networking forums, and award ceremonies. Established streamlined communication workflows between stakeholders, designers, and management teams.", skills: ["Meta Ads", "Facebook", "Instagram", "LinkedIn", "X (Twitter)", "Content Strategy", "Event Promotion", "Community Management", "Stakeholder Communication", "Performance Reporting"] },
+    { id: 15, category: "Hospitality & Entertainment", niche: "Nightlife, Dance Club & Live Entertainment", title: "The 20X ROAS Nightlife Growth Engine (Meta Ads)", budget: "AED 200/month", logo: "assets/logos/clients/RedSquare-logo.png", dashboard: "assets/dashboards/KBM-RedSquare-analytics.png", brief: "I was tasked with increasing venue footfall and strengthening the digital presence of a premium nightlife and entertainment brand. The objective was to attract high-intent audiences, boost event attendance, and build a stronger social media following through a combination of paid and organic strategies.", execution: "I managed Meta advertising campaigns alongside the club's social media presence across Instagram, Facebook, and TikTok. Using audience segmentation and behavioral targeting, I developed campaigns focused on nightlife enthusiasts, event-goers, and entertainment seekers. I also coordinated with content creators and designers on content shoots, refined creative assets, managed publishing schedules, and implemented organic growth strategies designed to maximize engagement and audience retention.", outcome: "Achieved approximately 20X ROAS from footfall-focused Meta Ads campaigns. Increased organic Instagram audience growth by approximately 4X compared to previous performance. Managed paid and organic growth strategies simultaneously. Coordinated content production, creative execution, and campaign deployment. Strengthened brand visibility and event attendance through targeted audience acquisition.", skills: ["Meta Ads", "Facebook", "Instagram", "TikTok", "Audience Segmentation", "Event Promotion Campaigns", "Content Strategy", "Creative Production Coordination", "Community Management", "Performance Reporting"] },
+    { id: 16, category: "E-Commerce & Retail", niche: "Supermarket & Grocery Retail", title: "The 30X ROAS Retail Footfall Accelerator (Meta & TikTok Ads)", budget: "AED 600/day", logo: "assets/logos/clients/DreamNight-logo.png", dashboard: "assets/dashboards/KBM-DreamNight-analytics.png", brief: "I was brought in to increase customer footfall for a large retail supermarket while strengthening local brand awareness. The objective was to attract high-intent shoppers through a combination of paid advertising, influencer partnerships, and platform-specific content strategies.", execution: "I managed Meta Ads and TikTok advertising campaigns focused on driving store visits and purchase intent. I identified and coordinated with relevant influencers, developed campaign messaging, optimized audience targeting, and aligned promotional content with consumer shopping behaviors. By combining paid media with creator-led marketing, I built a multi-channel customer acquisition strategy designed to maximize in-store traffic.", outcome: "Achieved approximately 30X ROAS from footfall-focused campaigns. Successfully integrated influencer marketing with paid advertising initiatives. Managed customer acquisition campaigns across Meta and TikTok. Increased local brand visibility through strategic creator partnerships. Built a scalable framework for retail traffic generation.", skills: ["Meta Ads", "TikTok Ads", "Influencer Marketing", "Audience Targeting", "Retail Footfall Campaigns", "Content Strategy", "Creator Outreach", "Campaign Optimization", "Consumer Behavior Analysis", "Performance Reporting"] },
+    { id: 17, category: "Real Estate & Construction", niche: "Real Estate Brokerage & Property Consulting", title: "The Multi-Channel Property Lead Generation System", budget: "AED 1,000/day", logo: "assets/logos/clients/RoyalLinkProperties-logo.png", dashboard: "assets/dashboards/KBM-RoyalLinkProperties-analytics.png", brief: "I was tasked with generating qualified property inquiries for a real estate brokerage while strengthening its digital presence across multiple channels. The objective was to attract serious buyers and investors through a combination of paid advertising, content marketing, and consistent brand communication.", execution: "I managed lead generation campaigns across Meta and Google Ads while overseeing content distribution on Instagram, Facebook, TikTok, and YouTube. I developed ad messaging, wrote scripts for AI-generated property videos, collaborated with content production teams on shoots, refined creative assets, and coordinated campaign launches. Leveraging buyer psychology and intent-based targeting, I structured campaigns around property discovery, investment opportunities, and lead conversion.", outcome: "Managed multi-channel lead generation campaigns across Meta and Google. Generated qualified property inquiries across multiple real estate developments. Developed AI-assisted video advertising concepts and scripts. Coordinated content production and creative execution workflows. Built an integrated acquisition framework spanning paid media and organic content.", skills: ["Meta Ads", "Google Ads", "Facebook", "Instagram", "TikTok", "YouTube", "AI Video Scriptwriting", "Lead Generation Funnels", "Content Production Coordination", "Audience Targeting"] },
+    { id: 18, category: "Real Estate & Construction", niche: "Villa Construction, Landscaping & Pool Contracting", title: "The Construction Contractor Lead Generation Engine (Google Ads)", budget: "AED 200/day", logo: "assets/logos/clients/AspiresSky-logo.png", dashboard: "assets/dashboards/KBM-AspiresSky-analytics.png", brief: "I was engaged to build a complete lead generation system for a construction and contracting business specializing in villa construction, swimming pools, landscaping, garden development, and maintenance services. The objective was to generate high-quality inbound leads while establishing a reliable tracking and attribution framework from the ground up.", execution: "I built the entire Google Ads infrastructure from scratch, including campaign architecture, conversion tracking, audience segmentation, and performance measurement systems. I implemented Google Tag Manager and GA4 tracking to ensure accurate lead attribution and data collection. Using intent-based keyword targeting, audience signals, and conversion-focused ad messaging, I optimized campaigns to attract homeowners and property developers actively seeking construction and landscaping services. I also managed account verification, tracking quality assurance, and ongoing performance optimization.", outcome: "Built the Google Ads ecosystem from the ground up. Implemented enterprise-grade GTM and GA4 tracking infrastructure. Created custom audience frameworks to improve targeting precision. Generated high-quality inbound leads for multiple contracting services. Achieved approximately 5X ROAS through Google Ads lead generation campaigns.", skills: ["Google Ads", "Google Analytics 4", "Google Tag Manager", "Conversion Tracking", "Audience Segmentation", "Keyword Research", "Lead Generation Funnels", "Landing Page Optimization", "Attribution Modeling", "Performance Reporting"] },
+    { id: 19, category: "Accounting & Financial Services", niche: "Tax Consulting & VAT Management", title: "The Accounting & Financial Services Lead Acquisition Framework", budget: "USD $20/day", logo: "assets/logos/clients/CapitalLinksInternational-logo.png", dashboard: "assets/dashboards/KBM-CapitalLinksInternational-analytics.png", brief: "I was tasked with generating qualified leads for a financial consulting firm offering tax filing, VAT management, accounting, and bookkeeping services. The challenge was attracting business owners and decision-makers in a highly trust-driven industry where credibility and expertise heavily influence conversion behavior.", execution: "I managed Meta Ads campaigns alongside the firm's social media presence on Facebook and Instagram. Using behavioral psychology principles, I developed messaging focused on compliance confidence, financial risk reduction, operational efficiency, and professional expertise. I structured audience targeting around business owners, entrepreneurs, and corporate decision-makers while continuously optimizing creatives, ad copy, and lead generation workflows to improve inquiry quality.", outcome: "Managed lead generation campaigns for accounting and tax advisory services. Built audience targeting frameworks focused on business decision-makers. Developed trust-driven messaging designed to reduce conversion friction. Supported brand visibility through consistent social media management. Generated qualified inquiries for taxation, bookkeeping, accounting, and VAT-related services.", skills: ["Meta Ads", "Facebook", "Instagram", "Lead Generation Campaigns", "Audience Targeting", "Conversion Copywriting", "Creative Testing", "Funnel Optimization", "Competitor Research", "Performance Reporting"] },
     { id: 20, category: "E-Commerce & Retail", niche: "Jewelry & Accessories", title: "The Digital Foundation for a Luxury Jewelry Brand", budget: "PKR 1,000/day", logo: "assets/logos/clients/AsadJewellers-logo.png", dashboard: "assets/dashboards/KBM-AsadJewellers-analytics.png", brief: "I was brought in to establish the complete digital presence of a jewelry retailer with limited online infrastructure. The objective was to build a professional digital ecosystem, improve product visibility, and create multiple customer acquisition channels capable of supporting long-term business growth.", execution: "I built the brand's digital presence from the ground up by creating and optimizing Facebook and Instagram accounts, setting up Meta Shops, organizing product catalogs, launching a Google Business Profile, and developing a basic website. I also managed content creation, social media publishing, catalog optimization, and Meta advertising campaigns. Using consumer psychology principles, I focused on trust-building, product presentation, and purchase-intent messaging to strengthen brand perception and customer engagement.", outcome: "Established the brand's complete digital ecosystem from scratch. Built and optimized Meta Shops and product catalog infrastructure. Created and managed social media channels and content operations. Launched Meta Ads campaigns to support visibility and customer acquisition. Developed foundational assets that enabled future digital growth and online sales.", skills: ["Meta Ads", "Facebook", "Instagram", "Meta Shops", "Product Catalog Management", "Google Business Profile", "Website Development", "Content Strategy", "Community Management", "Conversion Copywriting"] }
   ];
 
@@ -6827,20 +7396,50 @@ gsap.registerPlugin(ScrollTrigger);
 
   // Categories for horizontal boxes
   const categories = [
-    "BFSI",
+    "BFSI (Banking, Financial Services & Insurance)",
     "E-Commerce & Retail",
     "Education & Training",
     "Health, Wellness & Fitness",
+    "Human Resources & Recruitment",
+    "Business & Professional Networking",
     "Real Estate & Construction",
-    "Business Services & Professional Networking",
+    "Accounting & Financial Services",
+    "Hospitality & Entertainment",
     "Research"
   ];
+
+  const categoryDisplayNames = {
+    "BFSI (Banking, Financial Services & Insurance)": "BFSI (Banking, Financial Services & Insurance)",
+    "BFSI": "BFSI (Banking, Financial Services & Insurance)",
+    "E-Commerce & Retail": "E-Commerce & Retail",
+    "Education & Training": "Education & Training",
+    "Health, Wellness & Fitness": "Health, Wellness & Fitness",
+    "Human Resources & Recruitment": "Human Resources & Recruitment",
+    "Business & Professional Networking": "Business & Professional Networking",
+    "Business Services & Professional Networking": "Business & Professional Networking",
+    "Real Estate & Construction": "Real Estate & Construction",
+    "Real Estate": "Real Estate & Construction",
+    "Construction & Real Estate Development": "Real Estate & Construction",
+    "Accounting & Financial Services": "Accounting & Financial Services",
+    "Hospitality & Entertainment": "Hospitality & Entertainment",
+    "Research": "Research"
+  };
+
+  function normalizeCategory(cat) {
+    return categoryDisplayNames[cat] || cat;
+  }
+
+  function projectsForCategory(category) {
+    const target = normalizeCategory(category);
+    return allProjects.filter(p => normalizeCategory(p.category) === target);
+  }
 
   let currentCategory = null;
   let currentProjectsList = [];
   let currentPage = 0;
   const projectsPerPage = 4;
   let isResearchMode = false;
+  var isMosaicMode = false;
 
   // Build horizontal category boxes
 function buildCategoryTimeline() {
@@ -6859,34 +7458,47 @@ function buildCategoryTimeline() {
 }
 
 function selectCategory(category) {
-  console.log("Category selected:", category);
-  currentCategory = category;
+  currentCategory = normalizeCategory(category);
   currentPage = 0;
-  isResearchMode = (category === "Research");
-  
-  // HIDE solar system, SHOW back button
+  isResearchMode = (currentCategory === "Research");
+  isMosaicMode = false;
+
   document.getElementById("solarSystemWrapper").style.display = "none";
+  const mosaic = document.getElementById("categoryMosaic");
+  if (mosaic) mosaic.style.display = "none";
   document.getElementById("backToCategoriesBtn").style.display = "inline-flex";
-    
-    document.querySelectorAll(".category-card").forEach(c => c.classList.remove("active"));
-    document.querySelector(`.category-card[data-category="${category}"]`)?.classList.add("active");
-    
-    currentProjectsList = allProjects.filter(p => {
-      if (category === "Real Estate & Construction") {
-        return ["Real Estate", "Construction & Real Estate Development", "Hospitality & Entertainment"].includes(p.category);
-      }
-      if (category === "Business Services & Professional Networking") {
-        return ["Business Services & Professional Networking", "Human Resources & Recruitment", "Accounting & Financial Services"].includes(p.category);
-      }
-      return p.category === category;
-    });
-    
-    if (isResearchMode) {
-      renderAllAcademicProjects();
-      document.getElementById("viewMoreContainer").style.display = "none";
-    } else {
-      renderProjects();
+
+  document.querySelectorAll(".category-card").forEach(c => c.classList.remove("active"));
+  document.querySelector(`.category-card[data-category="${currentCategory}"]`)?.classList.add("active");
+
+  currentProjectsList = projectsForCategory(currentCategory);
+
+  if (isResearchMode) {
+    renderAllAcademicProjects();
+    document.getElementById("viewMoreContainer").style.display = "none";
+  } else {
+    renderProjects();
+  }
+}
+
+  function updatePaginationUI() {
+    const viewMoreContainer = document.getElementById("viewMoreContainer");
+    const prevBtn = document.getElementById("projectsPrevBtn");
+    const nextBtn = document.getElementById("projectsNextBtn");
+    const viewMoreBtn = document.getElementById("viewMoreBtn");
+    const indicator = document.getElementById("projectsPageIndicator");
+    const totalPages = Math.max(1, Math.ceil(currentProjectsList.length / projectsPerPage));
+    const hasPages = currentProjectsList.length > projectsPerPage && !isResearchMode && !isMosaicMode;
+
+    if (!hasPages) {
+      viewMoreContainer.style.display = "none";
+      return;
     }
+    viewMoreContainer.style.display = "flex";
+    if (prevBtn) prevBtn.disabled = currentPage <= 0;
+    if (nextBtn) nextBtn.disabled = currentPage >= totalPages - 1;
+    if (viewMoreBtn) viewMoreBtn.style.display = currentPage >= totalPages - 1 ? "none" : "inline-block";
+    if (indicator) indicator.textContent = (currentPage + 1) + " / " + totalPages;
   }
 
   function renderProjects() {
@@ -6894,54 +7506,100 @@ function selectCategory(category) {
     const start = currentPage * projectsPerPage;
     const end = start + projectsPerPage;
     const pageProjects = currentProjectsList.slice(start, end);
-    
+
     if (pageProjects.length === 0) {
       container.innerHTML = '<p style="text-align:center;color:#9CA3AF;padding:2rem;">No projects found in this category.</p>';
       document.getElementById("viewMoreContainer").style.display = "none";
       return;
     }
-    
+
     container.innerHTML = pageProjects.map(project => `
       <div class="project-node" data-id="${project.id}">
         <div class="project-logo">
-          ${project.logo ? `<img src="${project.logo}" alt="Logo" onerror="this.parentElement.innerHTML='<span class=placeholder>📄</span>'">` : '<span class="placeholder">📄</span>'}
+          ${project.logo ? `<img src="${project.logo}" alt="Logo" loading="eager" decoding="async" onerror="window.__logoRetry&&window.__logoRetry(this,'📄')">` : '<span class="placeholder">📄</span>'}
         </div>
         <div class="project-info">
-          <div class="project-category-tag">${project.category} / ${project.niche}</div>
+          <div class="project-category-tag">${normalizeCategory(project.category)} / ${project.niche}</div>
           <h3>${project.title}</h3>
           <div class="project-budget">${project.budget}</div>
         </div>
       </div>
     `).join("");
-    
+
     document.querySelectorAll(".project-node").forEach(node => {
       node.addEventListener("click", () => openProjectModal(parseInt(node.dataset.id)));
     });
-    
-    const viewMoreContainer = document.getElementById("viewMoreContainer");
-    if (end < currentProjectsList.length && !isResearchMode) {
-      viewMoreContainer.style.display = "block";
-    } else {
-      viewMoreContainer.style.display = "none";
+
+    updatePaginationUI();
+
+    if (typeof gsap !== 'undefined') {
+      gsap.fromTo(".project-node", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.06 });
     }
-    
-    gsap.fromTo(".project-node", { opacity: 0, y: 20 }, { opacity: 1, y: 0, duration: 0.4, stagger: 0.06 });
+  }
+
+  function goProjectsPage(delta) {
+    const totalPages = Math.ceil(currentProjectsList.length / projectsPerPage);
+    const next = currentPage + delta;
+    if (next < 0 || next >= totalPages) return;
+    currentPage = next;
+    renderProjects();
+    document.getElementById("projectsGrid")?.scrollIntoView({ behavior: "smooth", block: "start" });
+  }
+
+  function renderCategoryMosaic() {
+    isMosaicMode = true;
+    const mosaic = document.getElementById("categoryMosaic");
+    const grid = document.getElementById("projectsGrid");
+    if (!mosaic) return;
+
+    const professionalCats = categories.filter(c => c !== "Research");
+    const counts = {};
+    professionalCats.forEach(c => { counts[c] = projectsForCategory(c).length; });
+    const maxCount = Math.max.apply(null, Object.values(counts).concat([0]));
+
+    // Shuffle layout randomly, but always paint the fullest categories orange/glowing
+    const shuffled = professionalCats.slice().sort(function() { return Math.random() - 0.5; });
+    let orangeSlots = shuffled.filter(function(cat) { return counts[cat] === maxCount; });
+    // Fill remaining orange slots for visual rhythm (about half the tiles)
+    const targetOrange = Math.max(orangeSlots.length, Math.ceil(shuffled.length / 2));
+    shuffled.forEach(function(cat) {
+      if (orangeSlots.length >= targetOrange) return;
+      if (orangeSlots.indexOf(cat) === -1 && counts[cat] >= Math.max(1, maxCount - 2)) {
+        orangeSlots.push(cat);
+      }
+    });
+
+    mosaic.innerHTML = shuffled.map(function(cat) {
+      const isOrange = orangeSlots.indexOf(cat) !== -1;
+      const cls = isOrange ? "mosaic-tile mosaic-orange" : "mosaic-tile mosaic-white";
+      return '<button type="button" class="' + cls + '" data-category="' + cat.replace(/"/g, '&quot;') + '">' + cat + '</button>';
+    }).join("");
+
+    mosaic.style.display = "grid";
+    if (grid) grid.innerHTML = "";
+    document.getElementById("viewMoreContainer").style.display = "none";
+
+    mosaic.querySelectorAll(".mosaic-tile").forEach(function(tile) {
+      tile.addEventListener("click", function() {
+        selectCategory(this.getAttribute("data-category"));
+      });
+    });
   }
 
   function renderAllAcademicProjects() {
-    const container = document.getElementById("projectsGrid");
-    container.innerHTML = academicProjects.map(project => `
-      <div class="project-node" data-id="${project.id}">
-        <div class="project-logo">
-          <span class="placeholder">📄</span>
-        </div>
-        <div class="project-info">
-          <div class="project-category-tag">${project.category} / ${project.niche}</div>
-          <h3>${project.title}</h3>
-          <div class="project-budget">${project.budget}</div>
-        </div>
+  const container = document.getElementById("projectsGrid");
+  container.innerHTML = academicProjects.map(project => `
+    <div class="project-node" data-id="${project.id}">
+      <div class="project-logo">
+        <img src="assets/logos/orgs/UO-logo.png" alt="University of Okara" onerror="this.parentElement.innerHTML='<span class=placeholder>📄</span>'">
       </div>
-    `).join("");
+      <div class="project-info">
+        <div class="project-category-tag">${project.category} / ${project.niche}</div>
+        <h3>${project.title}</h3>
+        <div class="project-budget">${project.budget}</div>
+      </div>
+    </div>
+  `).join("");
     
     document.querySelectorAll(".project-node").forEach(node => {
       node.addEventListener("click", () => openProjectModal(parseInt(node.dataset.id)));
@@ -6957,17 +7615,16 @@ function selectCategory(category) {
   }
 
   function backToCategories() {
-  console.log("Back to categories clicked");
   currentCategory = null;
   isResearchMode = false;
-  // Show the solar system again
+  isMosaicMode = false;
   document.getElementById("solarSystemWrapper").style.display = "flex";
   document.getElementById("backToCategoriesBtn").style.display = "none";
   document.getElementById("projectsGrid").innerHTML = "";
   document.getElementById("viewMoreContainer").style.display = "none";
-  // Remove active class from planets
+  const mosaic = document.getElementById("categoryMosaic");
+  if (mosaic) { mosaic.style.display = "none"; mosaic.innerHTML = ""; }
   document.querySelectorAll(".planet").forEach(p => p.classList.remove("active"));
-  // Reset category cards (if any)
   document.querySelectorAll(".category-card").forEach(c => c.classList.remove("active"));
 }
 
@@ -7010,11 +7667,7 @@ function selectCategory(category) {
         document.body.style.overflow = "";
         document.getElementById("categoryTimeline").style.display = "none";
         document.getElementById("backToCategoriesBtn").style.display = "inline-flex";
-        const professionalList = allProjects.filter(p => p.category !== "Research");
-        currentProjectsList = professionalList;
-        currentPage = 0;
-        isResearchMode = false;
-        renderProjects();
+        renderCategoryMosaic();
       });
     } else {
       document.getElementById("modalViewReportBtn")?.addEventListener("click", () => {
@@ -7033,14 +7686,11 @@ function selectCategory(category) {
   }
 
 function showProfessionalProjects() {
-  console.log("Showing professional projects");
   document.getElementById("solarSystemWrapper").style.display = "none";
   document.getElementById("backToCategoriesBtn").style.display = "inline-flex";
-  const professionalList = allProjects.filter(p => p.category !== "Research");
-  currentProjectsList = professionalList;
   currentPage = 0;
   isResearchMode = false;
-  renderProjects();
+  renderCategoryMosaic();
 }
 
 function showAcademicProjects() {
@@ -7113,36 +7763,53 @@ function showAcademicProjects() {
     "assets/logos/clients/TiramisuCafe-logo.png"
   ];
 
+  window.__logoRetry = function(img, fallbackEmoji) {
+    var retries = parseInt(img.getAttribute('data-retries') || '0', 10);
+    if (retries < 3) {
+      img.setAttribute('data-retries', String(retries + 1));
+      var src = img.getAttribute('data-src') || img.src;
+      setTimeout(function() {
+        img.src = src.split('?')[0] + '?r=' + Date.now();
+      }, 400 * (retries + 1));
+      return;
+    }
+    if (img.parentElement) {
+      img.parentElement.innerHTML = '<span class="logo-fallback">' + (fallbackEmoji || '🏢') + '</span>';
+    }
+  };
+
   function buildLogoRows() {
     const platformRow = document.getElementById("platformLogosRow");
     const clientRow = document.getElementById("clientLogosRow");
-    
-    // Build platform logos with emoji fallback (⚙️ for platforms)
-    const platformHtml = platformLogos.map(logo => `
-      <span class="logo-item">
-        <img src="${logo}" alt="Platform Logo" onerror="this.parentElement.innerHTML='<span class=logo-fallback>⚙️</span>'">
-      </span>
-    `).join("");
+
+    function logoSpan(src, emoji) {
+      return '<span class="logo-item"><img src="' + src + '" data-src="' + src + '" alt="Logo" width="120" height="48" decoding="async" loading="eager" onerror="window.__logoRetry(this,\'' + emoji + '\')"></span>';
+    }
+
+    const platformHtml = platformLogos.map(function(logo) { return logoSpan(logo, '⚙️'); }).join("");
     platformRow.innerHTML = platformHtml + platformHtml;
-    
-    // Build client logos with emoji fallback (🏢 for clients)
-    const clientHtml = clientLogos.map(logo => `
-      <span class="logo-item">
-        <img src="${logo}" alt="Client Logo" onerror="this.parentElement.innerHTML='<span class=logo-fallback>🏢</span>'">
-      </span>
-    `).join("");
+
+    const clientHtml = clientLogos.map(function(logo) { return logoSpan(logo, '🏢'); }).join("");
     clientRow.innerHTML = clientHtml + clientHtml;
+
+    // When connectivity returns, retry any broken logos
+    window.addEventListener('online', function() {
+      document.querySelectorAll('.logo-item img[data-src]').forEach(function(img) {
+        if (!img.complete || img.naturalWidth === 0) {
+          img.setAttribute('data-retries', '0');
+          img.src = img.getAttribute('data-src') + '?r=' + Date.now();
+        }
+      });
+    });
   }
 
   // Event Listeners
   document.getElementById("backToCategoriesBtn")?.addEventListener("click", backToCategories);
   document.getElementById("viewMoreBtn")?.addEventListener("click", viewMoreProjects);
+  document.getElementById("projectsPrevBtn")?.addEventListener("click", () => goProjectsPage(-1));
+  document.getElementById("projectsNextBtn")?.addEventListener("click", () => goProjectsPage(1));
   document.getElementById("professionalProjectsBtn")?.addEventListener("click", showProfessionalProjects);
   document.getElementById("academicProjectsBtn")?.addEventListener("click", showAcademicProjects);
-  document.getElementById("contactFooterBtn")?.addEventListener("click", () => {
-    const contactSection = document.getElementById("contact");
-    if (contactSection) contactSection.scrollIntoView({ behavior: "smooth" });
-  });
   document.getElementById("modalCloseBtn")?.addEventListener("click", () => {
     document.getElementById("projectModal").classList.remove("active");
     document.body.style.overflow = "";
@@ -7338,7 +8005,7 @@ function showAcademicProjects() {
           {
             name: 'Danish Sayed',
             role: 'Creative Account Manager & Brand Strategist',
-            quote: "I've worked closely with Haider, and one thing I genuinely respect about him is how he thinks before he acts. He comes from an Applied Psychology background, so when he builds campaigns, it's never random. He understands what makes people click, hesitate, or convert. There's always intent behind his strategy. From running full-funnel ads on Meta and Google to setting up clean GTM and GA4 tracking, he makes sure every dirham spent is accountable. No guesswork. Just clarity and performance. What I personally like most is that he's not just an 'ads guy.' He understands copy, storytelling, AI-driven content, and how to turn cold audiences into actual paying customers. He knows how to scale without just burning budget. If you're building a brand or scaling a startup, you want someone like Haider in your corner — someone who understands both people and numbers. Glad to have worked with him."
+            quote: "I've worked closely with Haider, and one thing I genuinely respect about him is how he thinks before he acts. He comes from an Applied Psychology background, so when he builds campaigns, it's never random. He understands what makes people click, hesitate, or convert. There's always intent behind his strategy. From running full-funnel ads on Meta and Google to setting up clean GTM and GA4 tracking, He makes sure every dirham spent is accountable. No guesswork. Just clarity and performance. What I personally like most is that he's not just an 'ads guy.' He understands copy, storytelling, AI-driven content, and how to turn cold audiences into actual paying customers. He knows how to scale without just burning budget. If you're building a brand or scaling a startup, you want someone like Haider in your corner — someone who understands both people and numbers. Glad to have worked with him."
           },
           {
             name: 'Muhammad Zaeem Khalid',
