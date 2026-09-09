@@ -6935,6 +6935,28 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
       // ============================================================
       const experienceData = [
         // ===== PROFESSIONAL ROLES (sorted by year desc) =====
+{
+  year: 2026,
+  role: 'Digital & Social Media Manager',
+  org: 'Cosmo Emporium',
+  orgLogo: 'assets/logos/orgs/CosmoEmporium-logo.png',
+  startMonth: 7,
+  startYear: 2026,
+  endMonth: null,
+  endYear: null,
+  location: 'Australia',
+  workMode: 'Remote',
+  isPsychology: false,
+  details: [
+    'Manage the full digital and social presence for a National Disability Insurance Scheme (NDIS) service provider across Meta and other platforms, driving brand awareness and engagement.',
+    'Design and execute high-impact creative strategies and content calendars in collaboration with cross-functional teams, ensuring consistent brand messaging across all channels.',
+    'Orchestrate and optimize Meta ad campaigns to generate qualified B2B leads, scaling acquisition while maintaining cost-efficiency and maximizing return on ad spend.',
+    'Spearhead end-to-end campaign execution—from strategic briefing and creative development to tracking, analysis, and reporting for continuous improvement.'
+  ],
+  skills: ['Social Media Management', 'Meta Ads', 'Content Strategy', 'Creative Direction', 'Lead Generation', 'Campaign Optimization', 'Team Collaboration', 'Performance Reporting']
+},
+
+
         {
           year: 2025,
           role: 'Sr. Social Media Manager & Brand Strategist',
@@ -7073,23 +7095,25 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
         return getMonthName(month) + ' ' + year;
       }
 
-      function getDuration(startMonth, startYear, endMonth, endYear) {
-        const now = new Date();
-        const endM = endMonth || (now.getMonth() + 1);
-        const endY = endYear || now.getFullYear();
+function getDuration(startMonth, startYear, endMonth, endYear) {
+  const now = new Date();
+  const endM = endMonth || (now.getMonth() + 1);
+  const endY = endYear || now.getFullYear();
 
-        let months = (endY - startYear) * 12 + (endM - startMonth);
-        if (months < 0) months = 0;
+  // ===== INCLUSIVE COUNT =====
+  // Add 1 to include the starting month as a full month
+  let months = (endY - startYear) * 12 + (endM - startMonth) + 1;
+  if (months < 0) months = 0;
 
-        const years = Math.floor(months / 12);
-        const remainingMonths = months % 12;
+  const years = Math.floor(months / 12);
+  const remainingMonths = months % 12;
 
-        let parts = [];
-        if (years > 0) parts.push(years + ' yr' + (years > 1 ? 's' : ''));
-        if (remainingMonths > 0) parts.push(remainingMonths + ' mo' + (remainingMonths > 1 ? 's' : ''));
-        if (parts.length === 0) return '0 mos';
-        return parts.join(' ');
-      }
+  let parts = [];
+  if (years > 0) parts.push(years + ' yr' + (years > 1 ? 's' : ''));
+  if (remainingMonths > 0) parts.push(remainingMonths + ' mo' + (remainingMonths > 1 ? 's' : ''));
+  if (parts.length === 0) return '0 mos';
+  return parts.join(' ');
+}
 
       function isPresent(exp) {
         return exp.endMonth === null || exp.endYear === null;
@@ -7760,10 +7784,16 @@ function showAcademicProjects() {
     "assets/logos/clients/BobsFishAndChips-logo.png",
     "assets/logos/clients/ChicagoPizzaUAE-logo.png",
     "assets/logos/clients/KebabBistro-logo.png",
-    "assets/logos/clients/TiramisuCafe-logo.png"
-  // ===== NEW CLIENT LOGO =====
-  "assets/logos/clients/CompleteBiz-logo.png"  // ← ADD THIS and any new logos here
-];
+    "assets/logos/clients/TiramisuCafe-logo.png",
+  // ===== ADD THIS NEW CLIENT LOGO =====
+  "assets/logos/clients/CompleteBiz-logo.png",
+  // ===== NEW COSMO EMPORIUM CLIENTS =====
+  "assets/logos/clients/NSCare-logo.png",
+  "assets/logos/clients/ICEE-logo.png",
+  "assets/logos/clients/MotobilityBrooklyn-logo.png",
+  "assets/logos/clients/ScopeNDIS-logo.png"
+  ];
+
   window.__logoRetry = function(img, fallbackEmoji) {
     var retries = parseInt(img.getAttribute('data-retries') || '0', 10);
     if (retries < 3) {
