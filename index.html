@@ -2031,6 +2031,26 @@
       margin-top: 0.05rem;
     }
 
+/* ============================================================
+ START OF  CLICKABLE COMPANY NAME (Experience Section)
+   Blue link styling with orange hover state
+   ============================================================ */
+.ghost-company-link {
+  color: #2563EB;
+  text-decoration: none;
+  transition: color 0.2s ease;
+  cursor: pointer;
+}
+
+.ghost-company-link:hover {
+  color: #FF8308;
+  text-decoration: underline;
+}
+/* ============================================================
+  END OF CLICKABLE COMPANY NAME (Experience Section)
+   Blue link styling with orange hover state
+   ============================================================ */
+
     /* Expanded details - hidden by default */
     .ghost-details {
       margin-top: 1rem;
@@ -6938,8 +6958,9 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
 {
   year: 2026,
   role: 'Digital & Social Media Manager',
-  org: 'Cosmo Emporium',
+  org: 'Cosmo Emporium Digital Solutions',
   orgLogo: 'assets/logos/orgs/CosmoEmporium-logo.png',
+  orgWebsite: 'https://cosmoemporium.com/', // ← ADD THIS
   startMonth: 7,
   startYear: 2026,
   endMonth: null,
@@ -6962,6 +6983,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
           role: 'Sr. Social Media Manager & Brand Strategist',
           org: 'KBM BPO Digital',
           orgLogo: 'assets/logos/orgs/KBMBPODigital-logo.png',
+          orgWebsite: 'https://kbmbpodigital.com/', // ← ADD THIS
           startMonth: 9,
           startYear: 2025,
           endMonth: null,
@@ -6986,6 +7008,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
           role: 'Digital Marketer & Social Media Strategist',
           org: 'Tech Cog',
           orgLogo: 'assets/logos/orgs/TechCog-logo.png',
+          orgWebsite: 'https://www.techcogg.com/', // ← ADD THIS
           startMonth: 6,
           startYear: 2025,
           endMonth: null,
@@ -7007,6 +7030,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
           role: 'Digital Marketing Manager',
           org: 'Teglax',
           orgLogo: 'assets/logos/orgs/Teglax-logo.png',
+          orgWebsite: 'https://teglax.com/', // ← ADD THIS
           startMonth: 1,
           startYear: 2024,
           endMonth: 6,
@@ -7029,6 +7053,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
           role: 'Digital Marketing Executive',
           org: 'Fantech Labs',
           orgLogo: 'assets/logos/orgs/FantechLabs-logo.png',
+          orgWebsite: 'https://fantechlabs.ca/', // ← ADD THIS
           startMonth: 4,
           startYear: 2023,
           endMonth: 6,
@@ -7052,6 +7077,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
           role: 'Internee Child Psychologist',
           org: 'Govt. Special Education Centre',
           orgLogo: 'assets/logos/orgs/GovtSpecialEducationCentreFor03RemainingDisabilitiesOkara-logo.png',
+          orgWebsite: 'https://www.facebook.com/gsec.okr/', // ← (No website so added facebook)
           startMonth: 3,
           startYear: 2024,
           endMonth: 5,
@@ -7069,6 +7095,7 @@ if (typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined') {
           role: 'Internee Clinical Psychologist',
           org: 'Insight Mind Care Center',
           orgLogo: 'assets/logos/orgs/InsightMindCareCenterSahiwal-logo.png',
+          orgWebsite: 'https://share.google/c0murM4QVOY7tQWEk', // ← (No website so added its google maps link)
           startMonth: 11,
           startYear: 2023,
           endMonth: 1,
@@ -7209,14 +7236,16 @@ function getDuration(startMonth, startYear, endMonth, endYear) {
         `).join('');
 
         card.innerHTML = `
-          <div class="ghost-logo">
-            <img src="${exp.orgLogo}" alt="${exp.org}" onerror="this.parentElement.innerHTML='<span class=placeholder>🏢</span>'">
-          </div>
-          <div class="ghost-body">
-            <div class="ghost-compact">
-              <span class="ghost-role">${exp.role}</span>
-              <span class="ghost-company">${exp.org}</span>
-            </div>
+  <div class="ghost-logo">
+    <img src="${exp.orgLogo}" alt="${exp.org}" onerror="this.parentElement.innerHTML='<span class=placeholder>🏢</span>'">
+  </div>
+  <div class="ghost-body">
+    <div class="ghost-compact">
+      <span class="ghost-role">${exp.role}</span>
+      ${exp.orgWebsite 
+        ? `<a href="${exp.orgWebsite}" target="_blank" rel="noopener" class="ghost-company ghost-company-link">${exp.org}</a>` 
+        : `<span class="ghost-company">${exp.org}</span>`}
+    </div>
             <div class="ghost-details">
               <div class="ghost-expanded-meta">
                 <span class="date-range">${startDate} - ${endDate}</span>
